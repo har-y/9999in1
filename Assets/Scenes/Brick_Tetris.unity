@@ -3261,6 +3261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565b565a3b4411e4cb44a249bd35faa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  brick: {fileID: 5754304919373116383, guid: 3aac3ab4893d9ed4ab07cba0bcf6dda2, type: 3}
+  height: 27
+  width: 11
 --- !u!1 &1917820580
 GameObject:
   m_ObjectHideFlags: 0
