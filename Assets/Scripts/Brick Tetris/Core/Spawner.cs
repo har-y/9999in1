@@ -33,7 +33,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    private BrickShape SpawnShape()
+    public BrickShape SpawnShape()
     {
         BrickShape shape = null;
         shape = Instantiate(GetRandomShape(), transform.position, Quaternion.identity) as BrickShape;
