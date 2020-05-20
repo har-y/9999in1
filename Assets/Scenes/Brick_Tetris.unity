@@ -1092,11 +1092,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717963083}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5, y: 25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &717963085
 MonoBehaviour:
@@ -1110,6 +1110,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37f1914c72e69894ba242fd208b760bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  brickShapes:
+  - {fileID: 7978968339690243179, guid: fba24679b04c70e41bdf1d1f65692a40, type: 3}
+  - {fileID: -7507034920392258185, guid: 5a20ece0c70db384fb3d995dbade8d07, type: 3}
+  - {fileID: -6059428551946555055, guid: 01b028534c29fa0409e535f9658eff55, type: 3}
+  - {fileID: -4535161733157521395, guid: 94426f68fc88d3b48bbbb9ed765b1935, type: 3}
+  - {fileID: -1312465397918186579, guid: af282865d17d6e04e848227fda12e2da, type: 3}
+  - {fileID: -1548791877527792806, guid: a0cc81ef11ec552408104a338d183b8e, type: 3}
+  - {fileID: 1052788017340263892, guid: 3a7034ab329e008469b021ac3c2cd99f, type: 3}
 --- !u!1 &731534545
 GameObject:
   m_ObjectHideFlags: 0
@@ -3522,7 +3530,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2012050831
 MonoBehaviour:
