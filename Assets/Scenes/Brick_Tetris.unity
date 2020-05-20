@@ -3258,10 +3258,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1883953049}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 565b565a3b4411e4cb44a249bd35faa8, type: 3}
+  m_Script: {fileID: 11500000, guid: a5d9e1cabaa6f5549a0178ce37a00876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brick: {fileID: 5754304919373116383, guid: 3aac3ab4893d9ed4ab07cba0bcf6dda2, type: 3}
+  brick: {fileID: 7618668256593768564, guid: 1a750829be18e814e94bfc2fdf8cfaed, type: 3}
   height: 27
   width: 11
 --- !u!1 &1917820580
