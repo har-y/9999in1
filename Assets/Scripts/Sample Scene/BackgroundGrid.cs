@@ -50,4 +50,23 @@ public class BackgroundGrid : MonoBehaviour
         }
 
     }
+
+    private bool IsInGrid(int x, int y)
+    {
+        return (x >= 0 && x < width && y >= 0);
+    }
+
+    public bool IsValidPosition(BrickShape shape)
+    {
+        foreach (Transform child in shape.transform)
+        {
+            Vector2 position = Vectorf.Round(child.position);
+
+            if (!IsInGrid((int) position.x, (int) position.y))
+            {
+                return false;
+            }          
+        }
+        return true;
+    }
 }
