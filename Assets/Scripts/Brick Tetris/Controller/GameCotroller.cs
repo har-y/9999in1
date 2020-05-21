@@ -10,6 +10,9 @@ public class GameCotroller : MonoBehaviour
     //info:: current shape
     private BrickShape _activeShape;
 
+    private float _interval = 1f;
+    private float _time;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,9 +46,14 @@ public class GameCotroller : MonoBehaviour
             return;
         }
 
-        if (_activeShape)
+        if (Time.time > _time)
         {
-            _activeShape.MoveDown();
+            _time = Time.time + _interval;
+
+            if (_activeShape)
+            {
+                _activeShape.MoveDown();
+            }
         }
     }
 }
