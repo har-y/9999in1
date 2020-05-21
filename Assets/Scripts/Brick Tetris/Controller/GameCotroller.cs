@@ -53,6 +53,16 @@ public class GameCotroller : MonoBehaviour
             if (_activeShape)
             {
                 _activeShape.MoveDown();
+
+                if (!_backgroundGrid.IsValidPosition(_activeShape))
+                {
+                    _activeShape.MoveUp();
+
+                    if (_spawner)
+                    {
+                        _activeShape = _spawner.SpawnShape();
+                    }
+                }
             }
         }
     }
