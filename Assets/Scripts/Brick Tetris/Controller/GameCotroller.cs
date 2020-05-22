@@ -58,6 +58,8 @@ public class GameCotroller : MonoBehaviour
                 {
                     _activeShape.MoveUp();
 
+                    _backgroundGrid.StoreShapeInGrid(_activeShape);
+
                     if (_spawner)
                     {
                         _activeShape = _spawner.SpawnShape();
