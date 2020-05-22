@@ -65,7 +65,12 @@ public class BackgroundGrid : MonoBehaviour
             if (!IsInGrid((int) position.x, (int) position.y))
             {
                 return false;
-            }          
+            }
+       
+            if (IsValidOccupied((int) position.x, (int) position.y, shape))
+            {
+                return false;
+            }
         }
         return true;
     }
@@ -82,5 +87,10 @@ public class BackgroundGrid : MonoBehaviour
             Vector2 position = Vectorf.Round(child.position);
             _grid[(int) position.x, (int) position.y] = child;
         }
+    }
+
+    private bool IsValidOccupied(int x, int y, BrickShape shape)
+    {
+        return (_grid[x,y] != null & _grid[x, y].parent != shape.transform);
     }
 }
