@@ -7,8 +7,9 @@ public class BackgroundGrid : MonoBehaviour
     public Transform brick;
     private Transform[,] _grid;
 
-    public int height = 27;
+    public int height = 30;
     public int width = 11;
+    public int header = 3;
 
 
     private void Awake()
@@ -56,6 +57,11 @@ public class BackgroundGrid : MonoBehaviour
         return (x >= 0 && x < width && y >= 0);
     }
 
+    private bool IsValidOccupied(int x, int y, BrickShape shape)
+    {
+        return (_grid[x,y] != null && _grid[x, y].parent != shape.transform);
+    }
+
     public bool IsValidPosition(BrickShape shape)
     {
         foreach (Transform child in shape.transform)
@@ -89,8 +95,4 @@ public class BackgroundGrid : MonoBehaviour
         }
     }
 
-    private bool IsValidOccupied(int x, int y, BrickShape shape)
-    {
-        return (_grid[x,y] != null & _grid[x, y].parent != shape.transform);
-    }
 }

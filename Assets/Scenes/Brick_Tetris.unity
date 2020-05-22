@@ -1776,7 +1776,7 @@ Canvas:
   m_GameObject: {fileID: 1026010006}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -3344,8 +3344,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brick: {fileID: 7618668256593768564, guid: 1a750829be18e814e94bfc2fdf8cfaed, type: 3}
-  height: 27
+  height: 30
   width: 11
+  header: 3
 --- !u!1 &1917820580
 GameObject:
   m_ObjectHideFlags: 0
