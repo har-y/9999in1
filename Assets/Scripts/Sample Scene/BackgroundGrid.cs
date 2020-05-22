@@ -69,4 +69,18 @@ public class BackgroundGrid : MonoBehaviour
         }
         return true;
     }
+
+    public void StoreShapeInGrid(BrickShape shape)
+    {
+        if (shape == null)
+        {
+            return;
+        }
+
+        foreach (Transform child in shape.transform)
+        {
+            Vector2 position = Vectorf.Round(child.position);
+            _grid[(int) position.x, (int) position.y] = child;
+        }
+    }
 }
