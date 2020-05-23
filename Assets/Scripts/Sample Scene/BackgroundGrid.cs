@@ -7,9 +7,9 @@ public class BackgroundGrid : MonoBehaviour
     public Transform brick;
     private Transform[,] _grid;
 
-    public int height = 30;
+    public int height = 35;
     public int width = 11;
-    public int header = 3;
+    public int header = 8;
 
 
     private void Awake()
@@ -33,7 +33,7 @@ public class BackgroundGrid : MonoBehaviour
     {
         if (brick != null)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < height - header; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
