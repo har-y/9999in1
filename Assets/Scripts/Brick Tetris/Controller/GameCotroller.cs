@@ -112,7 +112,16 @@ public class GameCotroller : MonoBehaviour
 
             if (!_backgroundGrid.IsValidPosition(_activeShape))
             {
-                LandShape();
+                if (_backgroundGrid.IsOverLimit(_activeShape))
+                {
+                    _activeShape.MoveUp();
+
+                    Debug.Log(_activeShape.name + " is over the limit");
+                }
+                else
+                {
+                    LandShape();
+                }
             }
         }
     }
