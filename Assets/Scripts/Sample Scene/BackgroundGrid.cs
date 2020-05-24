@@ -139,4 +139,17 @@ public class BackgroundGrid : MonoBehaviour
             ShiftOneRowDown(i);
         }
     }
+
+    public void ClearAllRows()
+    {
+        for (int y = 0; y < height; ++y)
+        {
+            if (IsRowComplete(y))
+            {
+                ClearRow(y);
+                ShiftRowsDown(y + 1);
+                y--;
+            }
+        }
+    }
 }
