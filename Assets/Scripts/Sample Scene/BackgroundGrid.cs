@@ -118,4 +118,25 @@ public class BackgroundGrid : MonoBehaviour
             _grid[x, y] = null;
         }
     }
+
+    private void ShiftOneRowDown(int y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            if (_grid[x, y] != null)
+            {
+                _grid[x, y - 1] = _grid[x, y];
+                _grid[x, y] = null;
+                _grid[x, y - 1].position += new Vector3(0f, -1f, 0f);
+            }
+        }
+    }
+
+    private void ShiftRowsDown(int y)
+    {
+        for (int i = y; i < width; ++i)
+        {
+            ShiftOneRowDown(i);
+        }
+    }
 }
