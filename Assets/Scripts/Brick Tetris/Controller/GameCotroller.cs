@@ -9,7 +9,8 @@ public class GameCotroller : MonoBehaviour
 
     private BrickShape _activeShape;
 
-    private float _timeInterval = 1f;
+    public  float _timeInterval = 0.9f;
+
     private float _timeNextDown;
 
     [Range(0.02f, 1f)] public float _timeRepeatRateLeftKey = 0.10f;
@@ -23,6 +24,11 @@ public class GameCotroller : MonoBehaviour
 
     [Range(0.01f, 1f)] public float _timeRepeatRateDownKey = 0.01f;
     private float _timeNextDownKey;
+
+    private void Awake()
+    {
+
+    }
 
     // Start is called before the first frame update
     void Start()
