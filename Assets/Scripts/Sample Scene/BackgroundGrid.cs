@@ -95,4 +95,27 @@ public class BackgroundGrid : MonoBehaviour
         }
     }
 
+    private bool IsRowComplete(int y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            if (_grid[x, y] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void ClearRow(int y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            if (_grid[x, y] != null)
+            {
+                Destroy(_grid[x, y].gameObject);
+            }
+            _grid[x, y] = null;
+        }
+    }
 }
