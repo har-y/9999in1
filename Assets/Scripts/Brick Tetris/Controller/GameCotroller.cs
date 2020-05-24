@@ -7,19 +7,30 @@ public class GameCotroller : MonoBehaviour
     private BackgroundGrid _backgroundGrid;
     private Spawner _spawner;
 
-    //info:: current shape
     private BrickShape _activeShape;
 
     private float _timeInterval = 1f;
-    private float _time;
-    private float _timeNextKey;
+    private float _timeNextDown;
 
-    [Range(0.02f, 1f)] public float _timeRepeatRateKey = 0.25f;
+    [Range(0.02f, 1f)] public float _timeRepeatRateLeftKey = 0.10f;
+    private float _timeNextLeftKey;
+
+    [Range(0.02f, 1f)] public float _timeRepeatRateRightKey = 0.10f;
+    private float _timeNextRightKey;
+
+    [Range(0.02f, 1f)] public float _timeRepeatRateRotateKey = 0.25f;
+    private float _timeNextRotateKey;
+
+    [Range(0.01f, 1f)] public float _timeRepeatRateDownKey = 0.01f;
+    private float _timeNextDownKey;
 
     // Start is called before the first frame update
     void Start()
     {
-        _timeNextKey = Time.time;
+        _timeNextLeftKey = Time.time + _timeRepeatRateLeftKey;
+        _timeNextRightKey = Time.time + _timeRepeatRateRightKey;
+        _timeNextDownKey = Time.time + _timeRepeatRateDownKey;
+        _timeNextDownKey = Time.time + _timeRepeatRateRotateKey;
 
         _backgroundGrid = FindObjectOfType<BackgroundGrid>();
         if (!_backgroundGrid)
@@ -46,7 +57,7 @@ public class GameCotroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_backgroundGrid || _spawner || _activeShape)
+        if (!_backgroundGrid || !_spawner || !_activeShape)
         {
             return;
         }
@@ -56,48 +67,60 @@ public class GameCotroller : MonoBehaviour
 
     private void PlayerInput()
     {
-        if (Input.GetButton("MoveRight") && Time.time > _timeNextKey || Input.GetButtonDown("MoveRight"))
+        if (Input.GetButton("MoveRight") && Time.time > _timeNextLeftKey || Input.GetButtonDown("MoveRight"))
         {
             _activeShape.MoveRight();
-            _timeNextKey = Time.time + _timeRepeatRateKey;
+            _timeNextLeftKey = Time.time + _timeRepeatRateRightKey;
 
-            if (_backgroundGrid.IsValidPosition(_activeShape))
-            {
-                Debug.Log("move right");
-            }
-            else
+            if (!_backgroundGrid.IsValidPosition(_activeShape))
             {
                 _activeShape.MoveLeft();
-
-                Debug.Log("hit the right boundary");
             }
         }
-
-        if (!_backgroundGrid || !_spawner)
+        else if (Input.GetButton("MoveLeft") && Time.time > _timeNextRightKey || Input.GetButtonDown("MoveLeft"))
         {
-            return;
-        }
+            _activeShape.MoveLeft();
+            _timeNextRightKey = Time.time + _timeRepeatRateLeftKey;
 
-        if (Time.time > _time)
-        {
-            _time = Time.time + _timeInterval;
-
-            if (_activeShape)
+            if (!_backgroundGrid.IsValidPosition(_activeShape))
             {
-                _activeShape.MoveDown();
-
-                if (!_backgroundGrid.IsValidPosition(_activeShape))
-                {
-                    _activeShape.MoveUp();
-
-                    _backgroundGrid.StoreShapeInGrid(_activeShape);
-
-                    if (_spawner)
-                    {
-                        _activeShape = _spawner.SpawnShape();
-                    }
-                }
+                _activeShape.MoveRight();
             }
         }
+        else if (Input.GetButtonDown("Rotate") && Time.time > _timeNextRotateKey)
+        {
+            _activeShape.RotateRight();
+            _timeNextRotateKey = Time.time + _timeRepeatRateRotateKey;
+
+            if (!_backgroundGrid.IsValidPosition(_activeShape))
+            {
+                _activeShape.RotateLeft();
+            }
+        }
+        else if (Input.GetButton("MoveDown") && (Time.time > _timeNextDownKey) || (Time.time > _timeNextDown))
+        {
+            _timeNextDown = Time.time + _timeInterval;
+            _timeNextDownKey = Time.time + _timeRepeatRateDownKey;
+
+            _activeShape.MoveDown();
+
+            if (!_backgroundGrid.IsValidPosition(_activeShape))
+            {
+                LandShape();
+            }
+        }
+    }
+
+    private void LandShape()
+    {
+        _timeNextLeftKey = Time.time;
+        _timeNextRightKey = Time.time;
+        _timeNextDownKey = Time.time;
+        _timeNextDownKey = Time.time;
+
+        _activeShape.MoveUp();
+
+        _backgroundGrid.StoreShapeInGrid(_activeShape);
+        _activeShape = _spawner.SpawnShape();
     }
 }
