@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class GameCotroller : MonoBehaviour
 {
-    private BackgroundGrid _backgroundGrid;
-    private Spawner _spawner;
-
-    private BrickShape _activeShape;
-
     public  float _timeInterval = 0.9f;
 
+    private BackgroundGrid _backgroundGrid;
+    private BrickShape _activeShape;
+    private Spawner _spawner;
+
     private float _timeNextDown;
+
+    private bool _isGameOver;
 
     [Range(0.02f, 1f)] public float _timeRepeatRateLeftKey = 0.10f;
     private float _timeNextLeftKey;
@@ -63,7 +64,7 @@ public class GameCotroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_backgroundGrid || !_spawner || !_activeShape)
+        if (!_backgroundGrid || !_spawner || !_activeShape || _isGameOver)
         {
             return;
         }
@@ -115,7 +116,7 @@ public class GameCotroller : MonoBehaviour
                 if (_backgroundGrid.IsOverLimit(_activeShape))
                 {
                     _activeShape.MoveUp();
-
+                    _isGameOver = true;
                     Debug.Log(_activeShape.name + " is over the limit");
                 }
                 else
