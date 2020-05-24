@@ -152,4 +152,16 @@ public class BackgroundGrid : MonoBehaviour
             }
         }
     }
+
+    public bool IsOverLimit(BrickShape shape)
+    {
+        foreach (Transform child in shape.transform)
+        {
+            if (child.transform.position.y >= (height - header - 1))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
