@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameCotroller : MonoBehaviour
 {
@@ -115,9 +116,7 @@ public class GameCotroller : MonoBehaviour
             {
                 if (_backgroundGrid.IsOverLimit(_activeShape))
                 {
-                    _activeShape.MoveUp();
-                    _isGameOver = true;
-                    Debug.Log(_activeShape.name + " is over the limit");
+                    GameOver();
                 }
                 else
                 {
@@ -139,5 +138,18 @@ public class GameCotroller : MonoBehaviour
         _timeNextDownKey = Time.time;
 
         _backgroundGrid.ClearAllRows();
+    }
+
+    private void GameOver()
+    {
+        _activeShape.MoveUp();
+        _isGameOver = true;
+        Debug.Log(_activeShape.name + " is over the limit");
+    }
+
+    public void Restart()
+    {
+        Debug.Log("Restarted");
+        SceneManager.LoadScene(0);
     }
 }
