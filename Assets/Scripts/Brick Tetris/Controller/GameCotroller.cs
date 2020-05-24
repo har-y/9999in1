@@ -119,14 +119,15 @@ public class GameCotroller : MonoBehaviour
 
     private void LandShape()
     {
+        _activeShape.MoveUp();
+        _backgroundGrid.StoreShapeInGrid(_activeShape);
+        _activeShape = _spawner.SpawnShape();
+
         _timeNextLeftKey = Time.time;
         _timeNextRightKey = Time.time;
         _timeNextDownKey = Time.time;
         _timeNextDownKey = Time.time;
 
-        _activeShape.MoveUp();
-
-        _backgroundGrid.StoreShapeInGrid(_activeShape);
-        _activeShape = _spawner.SpawnShape();
+        _backgroundGrid.ClearAllRows();
     }
 }
