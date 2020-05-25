@@ -27,9 +27,11 @@ public class GameCotroller : MonoBehaviour
     [Range(0.01f, 1f)] public float _timeRepeatRateDownKey = 0.01f;
     private float _timeNextDownKey;
 
+    [SerializeField] private GameObject _pausePanel;
+
     private void Awake()
     {
-
+        Time.timeScale = 1;
     }
 
     // Start is called before the first frame update
@@ -151,5 +153,25 @@ public class GameCotroller : MonoBehaviour
     {
         Debug.Log("Restarted");
         SceneManager.LoadScene(0);
+    }
+
+    public void Exit()
+    {
+        Debug.Log("Exit");
+        Application.Quit();
+    }
+
+    public void Play()
+    {
+        Debug.Log("Play");
+        Time.timeScale = 1;
+        _pausePanel.SetActive(false);
+    }
+
+    public void Pause()
+    {
+        Debug.Log("Paused");
+        Time.timeScale = 0;
+        _pausePanel.SetActive(true);
     }
 }
