@@ -10,6 +10,7 @@ public class GameCotroller : MonoBehaviour
     private BackgroundGrid _backgroundGrid;
     private BrickShape _activeShape;
     private Spawner _spawner;
+    private AudioManager _audioManager;
 
     private float _timeNextDown;
 
@@ -62,12 +63,18 @@ public class GameCotroller : MonoBehaviour
                 _activeShape = _spawner.SpawnShape();
             }
         }
+
+        _audioManager = FindObjectOfType<AudioManager>();
+        if (!_audioManager)
+        {
+            Debug.Log("not assign object");
+        }  
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!_backgroundGrid || !_spawner || !_activeShape || _isGameOver)
+        if (!_backgroundGrid || !_spawner || !_activeShape || !_audioManager || _isGameOver)
         {
             return;
         }
@@ -140,6 +147,11 @@ public class GameCotroller : MonoBehaviour
         _timeNextDownKey = Time.time;
 
         _backgroundGrid.ClearAllRows();
+
+        if (_audioManager.fxEnabled && _audioManager.dropSound)
+        {
+            AudioSource.PlayClipAtPoint(_audioManager.dropSound, Camera.main.transform.position, _audioManager.fxVolume);
+        }
     }
 
     private void GameOver()
