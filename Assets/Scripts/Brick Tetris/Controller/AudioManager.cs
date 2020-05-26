@@ -14,13 +14,18 @@ public class AudioManager : MonoBehaviour
     public AudioClip moveSound;
     public AudioClip dropSound;
     public AudioClip gameOverSound;
+
     public AudioClip backgroundMusic;
+    //private AudioClip _randomMusicClip;
+    //public AudioClip[] musicClips;
 
     public AudioSource musicSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        //_randomMusicClip = GetRandomClip(musicClips);
+        //PlayBackgroundMusic(_randomMusicClip);
         PlayBackgroundMusic(backgroundMusic);
     }
 
@@ -50,6 +55,7 @@ public class AudioManager : MonoBehaviour
         {
             if (musicEnabled)
             {
+                //PlayBackgroundMusic(_randomMusicClip);
                 PlayBackgroundMusic(backgroundMusic);
             }
             else
@@ -63,5 +69,11 @@ public class AudioManager : MonoBehaviour
     {
         musicEnabled = !musicEnabled;
         UpdateMusic();
+    }
+
+    public AudioClip GetRandomClip(AudioClip[] clips)
+    {
+        AudioClip randomClip = clips[Random.Range(0, clips.Length)];
+        return randomClip;
     }
 }
