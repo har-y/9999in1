@@ -167,6 +167,11 @@ public class GameCotroller : MonoBehaviour
         _timeNextDownKey = Time.time;
 
         _backgroundGrid.ClearAllRows();
+
+        if (_backgroundGrid.completedRows > 0)
+        {
+            PlaySound(_audioManager.clearRowSound, 0.25f);
+        }
     }
 
     private void GameOver()
