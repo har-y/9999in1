@@ -3095,7 +3095,7 @@ MonoBehaviour:
   dropSound: {fileID: 8300000, guid: d73c74f326bf3eb41aab739d9b24cdfe, type: 3}
   loseSound: {fileID: 8300000, guid: 19e2ab45bb2e3e64abd20f642636d35e, type: 3}
   errorSound: {fileID: 8300000, guid: 13e2ece6dca9b9c4b82623f2a0cd4100, type: 3}
-  gameOverSound: {fileID: 0}
+  gameOverSound: {fileID: 8300000, guid: 8a83bfe3dea305f45b6a78e13df4adaa, type: 3}
   backgroundMusic: {fileID: 0}
   musicSource: {fileID: 603457829}
 --- !u!1 &1302441245
@@ -4483,6 +4483,7 @@ MonoBehaviour:
   height: 35
   width: 11
   header: 8
+  completedRows: 0
 --- !u!1 &1917820580
 GameObject:
   m_ObjectHideFlags: 0

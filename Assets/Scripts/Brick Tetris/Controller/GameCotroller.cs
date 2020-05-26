@@ -182,6 +182,8 @@ public class GameCotroller : MonoBehaviour
 
         _isGameOver = true;
         Debug.Log(_activeShape.name + " is over the limit");
+
+        PlaySound(_audioManager.gameOverSound, 0.25f);
     }
 
     public void Restart()
