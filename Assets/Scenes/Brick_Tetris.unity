@@ -3094,6 +3094,7 @@ MonoBehaviour:
   moveSound: {fileID: 8300000, guid: aa06b796019c7ac418eb87283ab2e12c, type: 3}
   dropSound: {fileID: 8300000, guid: d73c74f326bf3eb41aab739d9b24cdfe, type: 3}
   loseSound: {fileID: 8300000, guid: 19e2ab45bb2e3e64abd20f642636d35e, type: 3}
+  errorSound: {fileID: 8300000, guid: 13e2ece6dca9b9c4b82623f2a0cd4100, type: 3}
   gameOverSound: {fileID: 0}
   backgroundMusic: {fileID: 0}
   musicSource: {fileID: 603457829}

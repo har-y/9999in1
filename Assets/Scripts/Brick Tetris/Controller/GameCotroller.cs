@@ -89,9 +89,15 @@ public class GameCotroller : MonoBehaviour
             _activeShape.MoveRight();
             _timeNextLeftKey = Time.time + _timeRepeatRateRightKey;
 
+
             if (!_backgroundGrid.IsValidPosition(_activeShape))
             {
                 _activeShape.MoveLeft();
+                PlaySound(_audioManager.errorSound, 0.35f);
+            }
+            else
+            {
+                PlaySound(_audioManager.moveSound, 0.25f);
             }
         }
         else if (Input.GetButton("MoveLeft") && Time.time > _timeNextRightKey || Input.GetButtonDown("MoveLeft"))
@@ -102,6 +108,11 @@ public class GameCotroller : MonoBehaviour
             if (!_backgroundGrid.IsValidPosition(_activeShape))
             {
                 _activeShape.MoveRight();
+                PlaySound(_audioManager.errorSound, 0.35f);
+            }
+            else
+            {
+                PlaySound(_audioManager.moveSound, 0.25f);
             }
         }
         else if (Input.GetButtonDown("Rotate") && Time.time > _timeNextRotateKey)
@@ -112,6 +123,11 @@ public class GameCotroller : MonoBehaviour
             if (!_backgroundGrid.IsValidPosition(_activeShape))
             {
                 _activeShape.RotateLeft();
+                PlaySound(_audioManager.errorSound, 0.35f);
+            }
+            else
+            {
+                PlaySound(_audioManager.moveSound, 0.25f);
             }
         }
         else if (Input.GetButton("MoveDown") && (Time.time > _timeNextDownKey) || (Time.time > _timeNextDown))
@@ -135,10 +151,14 @@ public class GameCotroller : MonoBehaviour
         }
     }
 
+
     private void LandShape()
     {
         _activeShape.MoveUp();
         _backgroundGrid.StoreShapeInGrid(_activeShape);
+
+        PlaySound(_audioManager.dropSound, 0.75f);
+
         _activeShape = _spawner.SpawnShape();
 
         _timeNextLeftKey = Time.time;
@@ -147,16 +167,14 @@ public class GameCotroller : MonoBehaviour
         _timeNextDownKey = Time.time;
 
         _backgroundGrid.ClearAllRows();
-
-        if (_audioManager.fxEnabled && _audioManager.dropSound)
-        {
-            AudioSource.PlayClipAtPoint(_audioManager.dropSound, Camera.main.transform.position, _audioManager.fxVolume);
-        }
     }
 
     private void GameOver()
     {
         _activeShape.MoveUp();
+
+        PlaySound(_audioManager.loseSound, 1f);
+
         _isGameOver = true;
         Debug.Log(_activeShape.name + " is over the limit");
     }
@@ -185,5 +203,13 @@ public class GameCotroller : MonoBehaviour
         Debug.Log("Paused");
         Time.timeScale = 0;
         _pausePanel.SetActive(true);
+    }
+
+    private void PlaySound(AudioClip clip, float volume)
+    {
+        if (_audioManager.fxEnabled && clip)
+        {
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, Mathf.Clamp(_audioManager.fxVolume * volume, 0.05f, 1f));
+        }
     }
 }
