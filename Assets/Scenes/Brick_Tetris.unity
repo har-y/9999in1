@@ -3086,7 +3086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f254c463164d94eb12306a49bd65f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicVolume: 1
+  musicVolume: 0.1
   fxVolume: 1
   musicEnabled: 1
   fxEnabled: 1
@@ -3094,6 +3094,7 @@ MonoBehaviour:
   moveSound: {fileID: 0}
   dropSound: {fileID: 0}
   gameOverSound: {fileID: 0}
+  backgroundMusic: {fileID: 0}
   musicSource: {fileID: 603457829}
 --- !u!1 &1302441245
 GameObject:

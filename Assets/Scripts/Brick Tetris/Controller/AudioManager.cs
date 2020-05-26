@@ -14,19 +14,20 @@ public class AudioManager : MonoBehaviour
     public AudioClip moveSound;
     public AudioClip dropSound;
     public AudioClip gameOverSound;
+    public AudioClip backgroundMusic;
 
     public AudioSource musicSource;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayBackgroundMusic(backgroundMusic);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateMusic();
     }
 
     public void PlayBackgroundMusic(AudioClip musicClip)
@@ -41,5 +42,20 @@ public class AudioManager : MonoBehaviour
         musicSource.volume = musicVolume;
         musicSource.loop = true;
         musicSource.Play();
+    }
+
+    private void UpdateMusic()
+    {
+        if (musicSource.isPlaying != musicEnabled)
+        {
+            if (musicEnabled)
+            {
+                PlayBackgroundMusic(backgroundMusic);
+            }
+            else
+            {
+                musicSource.Stop();
+            }
+        }
     }
 }
