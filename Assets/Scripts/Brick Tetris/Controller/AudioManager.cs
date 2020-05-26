@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateMusic();
+        
     }
 
     public void PlayBackgroundMusic(AudioClip musicClip)
@@ -57,5 +57,11 @@ public class AudioManager : MonoBehaviour
                 musicSource.Stop();
             }
         }
+    }
+
+    public void ToggleMusic()
+    {
+        musicEnabled = !musicEnabled;
+        UpdateMusic();
     }
 }
