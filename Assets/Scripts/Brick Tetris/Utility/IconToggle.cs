@@ -6,10 +6,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class IconToggle : MonoBehaviour
 {
-    public Sprite sound_on;
-    public Sprite sound_off;
-
     public bool defaultSoundState = true;
+
+    public Sprite icon_true;
+    public Sprite icon_false;
 
     private Image _image;
 
@@ -17,7 +17,7 @@ public class IconToggle : MonoBehaviour
     void Start()
     {
         _image = GetComponent<Image>();
-        _image.sprite = (defaultSoundState) ? sound_on : sound_off;
+        _image.sprite = (defaultSoundState) ? icon_true : icon_false;
     }
 
     // Update is called once per frame
@@ -28,12 +28,12 @@ public class IconToggle : MonoBehaviour
 
     public void ToggleIcon(bool state)
     {
-        if (!_image || !sound_on || !sound_off)
+        if (!_image || !icon_true || !icon_false)
         {
             Debug.Log("missing sound icon");
             return;
         }
 
-        _image.sprite = (state) ? sound_on : sound_off;
+        _image.sprite = (state) ? icon_true : icon_false;
     }
 }

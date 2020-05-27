@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brick: {fileID: 7618668256593768564, guid: 1a750829be18e814e94bfc2fdf8cfaed, type: 3}
-  height: 27
+  height: 35
   width: 11
   header: 8
   completedRows: 0
