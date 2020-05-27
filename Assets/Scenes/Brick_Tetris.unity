@@ -2760,7 +2760,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2012050831}
-        m_MethodName: Play
+        m_MethodName: TogglePause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3401,7 +3401,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2012050831}
-        m_MethodName: Pause
+        m_MethodName: TogglePause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4699,12 +4699,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6ee93944e8c0241817878d532ac0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeInterval: 0.9
   _timeRepeatRateLeftKey: 0.1
   _timeRepeatRateRightKey: 0.1
   _timeRepeatRateRotateKey: 0.25
   _timeRepeatRateDownKey: 0.01
+  _timeInterval: 0.9
   _pausePanel: {fileID: 446751055}
+  _isPaused: 0
 --- !u!1 &2040640280
 GameObject:
   m_ObjectHideFlags: 0

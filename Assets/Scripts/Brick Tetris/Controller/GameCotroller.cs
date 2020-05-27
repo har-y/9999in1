@@ -5,16 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameCotroller : MonoBehaviour
 {
-    public  float _timeInterval = 0.9f;
-
-    private BackgroundGrid _backgroundGrid;
-    private BrickShape _activeShape;
-    private Spawner _spawner;
-    private AudioManager _audioManager;
-
-    private float _timeNextDown;
-
-    private bool _isGameOver;
 
     [Range(0.02f, 1f)] public float _timeRepeatRateLeftKey = 0.10f;
     private float _timeNextLeftKey;
@@ -28,11 +18,24 @@ public class GameCotroller : MonoBehaviour
     [Range(0.01f, 1f)] public float _timeRepeatRateDownKey = 0.01f;
     private float _timeNextDownKey;
 
+    public  float _timeInterval = 0.9f;
+
     [SerializeField] private GameObject _pausePanel;
+
+    private BackgroundGrid _backgroundGrid;
+    private BrickShape _activeShape;
+    private Spawner _spawner;
+    private AudioManager _audioManager;
+
+    private float _timeNextDown;
+
+    private bool _isGameOver = false;
+    public bool _isPaused = false;
+
 
     private void Awake()
     {
-        Time.timeScale = 1;
+        
     }
 
     // Start is called before the first frame update
@@ -68,7 +71,12 @@ public class GameCotroller : MonoBehaviour
         if (!_audioManager)
         {
             Debug.Log("not assign object");
-        }  
+        }
+
+        if (_pausePanel)
+        {
+            _pausePanel.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -149,6 +157,10 @@ public class GameCotroller : MonoBehaviour
                 }
             }
         }
+        else if (Input.GetButtonDown("Pause"))
+        {
+            TogglePause();
+        }
     }
 
 
@@ -188,6 +200,7 @@ public class GameCotroller : MonoBehaviour
 
     public void Restart()
     {
+        Time.timeScale = 1;
         Debug.Log("Restarted");
         SceneManager.LoadScene(0);
     }
@@ -198,25 +211,33 @@ public class GameCotroller : MonoBehaviour
         Application.Quit();
     }
 
-    public void Play()
-    {
-        Debug.Log("Play");
-        Time.timeScale = 1;
-        _pausePanel.SetActive(false);
-    }
-
-    public void Pause()
-    {
-        Debug.Log("Paused");
-        Time.timeScale = 0;
-        _pausePanel.SetActive(true);
-    }
-
     private void PlaySound(AudioClip clip, float volume)
     {
         if (_audioManager.fxEnabled && clip)
         {
             AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, Mathf.Clamp(_audioManager.fxVolume * volume, 0.05f, 1f));
+        }
+    }
+
+    public void TogglePause()
+    {
+        if (_isGameOver)
+        {
+            return;
+        }
+
+        _isPaused = !_isPaused;
+
+        if (_pausePanel)
+        {
+            _pausePanel.SetActive(_isPaused);
+
+            if (_audioManager)
+            {
+                _audioManager.musicSource.volume = (_isPaused) ? _audioManager.musicVolume * 0.25f : _audioManager.musicVolume;
+            }
+
+            Time.timeScale = (_isPaused) ? 0 : 1;
         }
     }
 }
