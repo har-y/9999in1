@@ -23,6 +23,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource musicSource;
 
+    public IconToggle iconToggle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,11 +73,21 @@ public class AudioManager : MonoBehaviour
     {
         musicEnabled = !musicEnabled;
         UpdateMusic();
+
+        if (iconToggle)
+        {
+            iconToggle.ToggleIcon(musicEnabled);
+        }
     }
 
     public void ToggleFX()
     {
         fxEnabled = !fxEnabled;
+
+        if (iconToggle)
+        {
+            iconToggle.ToggleIcon(fxEnabled);
+        }
     }
 
     public AudioClip GetRandomClip(AudioClip[] clips)
