@@ -135,7 +135,7 @@ public class BackgroundGrid : MonoBehaviour
 
     private void ShiftRowsDown(int y)
     {
-        for (int i = y; i < width; ++i)
+        for (int i = y; i < height; ++i)
         {
             ShiftOneRowDown(i);
         }
@@ -162,7 +162,7 @@ public class BackgroundGrid : MonoBehaviour
     {
         foreach (Transform child in shape.transform)
         {
-            if (child.transform.position.y >= (height - header - 1))
+            if (child.transform.position.y >= (height - header))
             {
                 return true;
             }
