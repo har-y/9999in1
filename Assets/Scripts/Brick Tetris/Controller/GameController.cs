@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
     private float _timeNextDownKey;
 
     public  float _timeInterval = 0.9f;
+    private float _dropTimeInterval;
 
     [SerializeField] private GameObject _pausePanel;
 
@@ -46,6 +47,8 @@ public class GameController : MonoBehaviour
         _timeNextRightKey = Time.time + _timeRepeatRateRightKey;
         _timeNextDownKey = Time.time + _timeRepeatRateDownKey;
         _timeNextDownKey = Time.time + _timeRepeatRateRotateKey;
+
+        _dropTimeInterval = _timeInterval;
 
         _backgroundGrid = FindObjectOfType<BackgroundGrid>();
         if (!_backgroundGrid)
@@ -99,7 +102,7 @@ public class GameController : MonoBehaviour
 
     private void PlayerInput()
     {
-        if (Input.GetButton("MoveRight") && Time.time > _timeNextLeftKey || Input.GetButtonDown("MoveRight"))
+        if ((Input.GetButton("MoveRight") && Time.time > _timeNextLeftKey) || Input.GetButtonDown("MoveRight"))
         {
             _activeShape.MoveRight();
             _timeNextLeftKey = Time.time + _timeRepeatRateRightKey;
@@ -115,7 +118,7 @@ public class GameController : MonoBehaviour
                 PlaySound(_audioManager.moveSound, 0.25f);
             }
         }
-        else if (Input.GetButton("MoveLeft") && Time.time > _timeNextRightKey || Input.GetButtonDown("MoveLeft"))
+        else if ((Input.GetButton("MoveLeft") && Time.time > _timeNextRightKey) || Input.GetButtonDown("MoveLeft"))
         {
             _activeShape.MoveLeft();
             _timeNextRightKey = Time.time + _timeRepeatRateLeftKey;
@@ -145,9 +148,9 @@ public class GameController : MonoBehaviour
                 PlaySound(_audioManager.moveSound, 0.25f);
             }
         }
-        else if (Input.GetButton("MoveDown") && (Time.time > _timeNextDownKey) || (Time.time > _timeNextDown))
+        else if ((Input.GetButton("MoveDown") && (Time.time > _timeNextDownKey)) || (Time.time > _timeNextDown))
         {
-            _timeNextDown = Time.time + _timeInterval;
+            _timeNextDown = Time.time + _dropTimeInterval;
             _timeNextDownKey = Time.time + _timeRepeatRateDownKey;
 
             _activeShape.MoveDown();
@@ -193,6 +196,7 @@ public class GameController : MonoBehaviour
             if (_scoreController.isLevelUp)
             {
                 PlaySound(_audioManager.levelUpSound, 0.35f);
+                _dropTimeInterval = Mathf.Clamp(_timeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
             }
             else
             {

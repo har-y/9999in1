@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class ScoreController : MonoBehaviour
 {
     private int _score = 0;
-    private int _level = 0;
     private int _lines;
+
+    public int _level = 0;
 
     public int linesPerLevel = 5;
 
