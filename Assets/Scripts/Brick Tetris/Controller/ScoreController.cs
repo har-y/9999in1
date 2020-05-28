@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
-    private int _score = 0;
-    private int _lines;
+    public Text _levelText;
+    public Text _scoreText;
+    public Text _highScoreText;
 
     public int _level = 0;
-
     public int linesPerLevel = 5;
 
     public bool isLevelUp;
@@ -17,9 +17,17 @@ public class ScoreController : MonoBehaviour
     private const int _minLines = 1;
     private const int _maxLines = 4;
 
-    public Text _levelText;
-    public Text _scoreText;
-    public Text _highScoreText;
+    private string _highscoreKey = "HighScore";
+
+    private int _score = 0;
+    private int _highScore = 0;
+    private int _lines;
+
+    private void Awake()
+    {
+        _highScore = PlayerPrefs.GetInt(_highscoreKey, 0);
+        UpdateTextUI();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -83,6 +91,20 @@ public class ScoreController : MonoBehaviour
         if (_scoreText)
         {
             _scoreText.text = PadZero(_score, 12);
+        }
+
+        if (_highScoreText)
+        {
+            if (_score > _highScore)
+            {
+                int tmpValue = _score;
+                PlayerPrefs.SetInt(_highscoreKey, tmpValue);
+                _highScoreText.text = PadZero(tmpValue, 12);
+            }
+            else
+            {
+                _highScoreText.text = PadZero(_highScore, 12);
+            }
         }
     }
 
