@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
     private BrickShape _activeShape;
     private Spawner _spawner;
     private AudioManager _audioManager;
+    private ScoreController _scoreController;
 
     private float _timeNextDown;
 
@@ -73,6 +74,12 @@ public class GameController : MonoBehaviour
             Debug.Log("not assign object");
         }
 
+        _scoreController = FindObjectOfType<ScoreController>();
+        if (!_scoreController)
+        {
+            Debug.Log("not assign object");
+        }
+
         if (_pausePanel)
         {
             _pausePanel.SetActive(false);
@@ -82,7 +89,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_backgroundGrid || !_spawner || !_activeShape || !_audioManager || _isGameOver)
+        if (!_backgroundGrid || !_spawner || !_activeShape || !_audioManager || !_scoreController || _isGameOver)
         {
             return;
         }
@@ -163,7 +170,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-
     private void LandShape()
     {
         _activeShape.MoveUp();
@@ -182,6 +188,8 @@ public class GameController : MonoBehaviour
 
         if (_backgroundGrid.completedRows > 0)
         {
+            _scoreController.ScoreLines(_backgroundGrid.completedRows);
+
             PlaySound(_audioManager.clearRowSound, 0.25f);
         }
     }
