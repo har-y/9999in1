@@ -190,7 +190,16 @@ public class GameController : MonoBehaviour
         {
             _scoreController.ScoreLines(_backgroundGrid.completedRows);
 
-            PlaySound(_audioManager.clearRowSound, 0.25f);
+            if (_scoreController.isLevelUp)
+            {
+                PlaySound(_audioManager.levelUpSound, 0.35f);
+            }
+            else
+            {
+                PlaySound(_audioManager.clearRowSound, 0.25f);
+            }
+
+            //PlaySound(_audioManager.clearRowSound, 0.15f);
         }
     }
 

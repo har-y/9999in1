@@ -11,6 +11,8 @@ public class ScoreController : MonoBehaviour
 
     public int linesPerLevel = 5;
 
+    public bool isLevelUp;
+
     private const int _minLines = 1;
     private const int _maxLines = 4;
 
@@ -21,7 +23,7 @@ public class ScoreController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Reset();
+        LevelReset();
     }
 
     // Update is called once per frame
@@ -32,6 +34,8 @@ public class ScoreController : MonoBehaviour
 
     public void ScoreLines(int lines)
     {
+        isLevelUp = false;
+
         lines = Mathf.Clamp(lines, _minLines, _maxLines);
 
         switch (lines)
@@ -49,14 +53,23 @@ public class ScoreController : MonoBehaviour
                 _score += 400 * _level;
                 break;
         }
+        _lines -= lines;
+
+        if (_lines <= 0)
+        {
+            LevelUp();
+            UpdateTextUI();
+        }
 
         UpdateTextUI();
     }
 
-    public void Reset()
+    public void LevelReset()
     {
         _level = 1;
         _lines = linesPerLevel * _level;
+
+        UpdateTextUI();
     }
 
     private void UpdateTextUI()
@@ -82,5 +95,12 @@ public class ScoreController : MonoBehaviour
         }
 
         return nString;
+    }
+
+    public void LevelUp()
+    {
+        _level++;
+        _lines = linesPerLevel * _level;
+        isLevelUp = true;
     }
 }

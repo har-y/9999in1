@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linesPerLevel: 5
+  isLevelUp: 0
   _levelText: {fileID: 1219570299}
   _scoreText: {fileID: 1551272144}
   _highScoreText: {fileID: 1404715041}
@@ -3200,6 +3201,7 @@ MonoBehaviour:
   loseSound: {fileID: 8300000, guid: 19e2ab45bb2e3e64abd20f642636d35e, type: 3}
   errorSound: {fileID: 8300000, guid: 13e2ece6dca9b9c4b82623f2a0cd4100, type: 3}
   gameOverSound: {fileID: 8300000, guid: 8a83bfe3dea305f45b6a78e13df4adaa, type: 3}
+  levelUpSound: {fileID: 8300000, guid: 7b17a12b826997d4da1b8da072da160f, type: 3}
   backgroundMusic: {fileID: 0}
   musicSource: {fileID: 603457829}
   iconToggle: {fileID: 85169609}

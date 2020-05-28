@@ -16,6 +16,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip loseSound;
     public AudioClip errorSound;
     public AudioClip gameOverSound;
+    public AudioClip levelUpSound;
 
     public AudioClip backgroundMusic;
     //private AudioClip _randomMusicClip;
