@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class ScoreController : MonoBehaviour
     private const int _minLines = 1;
     private const int _maxLines = 4;
 
+    public Text _levelText;
+    public Text _scoreText;
+    public Text _highScoreText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +27,7 @@ public class ScoreController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void ScoreLines(int lines)
@@ -44,11 +49,38 @@ public class ScoreController : MonoBehaviour
                 _score += 400 * _level;
                 break;
         }
+
+        UpdateTextUI();
     }
 
     public void Reset()
     {
         _level = 1;
         _lines = linesPerLevel * _level;
+    }
+
+    private void UpdateTextUI()
+    {
+        if (_levelText)
+        {
+            _levelText.text = _level.ToString();
+        }
+
+        if (_scoreText)
+        {
+            _scoreText.text = PadZero(_score, 12);
+        }
+    }
+
+    private string PadZero(int n, int padDigits)
+    {
+        string nString = n.ToString();
+
+        while (nString.Length < padDigits)
+        {
+            nString = "0" + nString;
+        }
+
+        return nString;
     }
 }
