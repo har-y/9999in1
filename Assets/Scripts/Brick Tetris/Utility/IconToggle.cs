@@ -6,10 +6,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class IconToggle : MonoBehaviour
 {
-    public bool defaultSoundState = true;
-
     public Sprite icon_true;
     public Sprite icon_false;
+
+    public bool defaultSoundState = true;
 
     private Image _image;
 

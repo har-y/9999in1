@@ -7,9 +7,6 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1f)] public float musicVolume = 1f;
     [Range(0f, 1f)] public float fxVolume = 1f;
 
-    public bool musicEnabled = true;
-    public bool fxEnabled = true;
-
     public AudioClip clearRowSound;
     public AudioClip moveSound;
     public AudioClip dropSound;
@@ -17,14 +14,15 @@ public class AudioManager : MonoBehaviour
     public AudioClip errorSound;
     public AudioClip gameOverSound;
     public AudioClip levelUpSound;
-
     public AudioClip backgroundMusic;
+    public AudioSource musicSource;
+    public IconToggle iconToggle;
+
+    public bool musicEnabled = true;
+    public bool fxEnabled = true;
+
     //private AudioClip _randomMusicClip;
     //public AudioClip[] musicClips;
-
-    public AudioSource musicSource;
-
-    public IconToggle iconToggle;
 
     // Start is called before the first frame update
     void Start()

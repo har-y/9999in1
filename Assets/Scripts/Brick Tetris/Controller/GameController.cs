@@ -5,23 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-
     [Range(0.02f, 1f)] public float _timeRepeatRateLeftKey = 0.10f;
-    private float _timeNextLeftKey;
-
     [Range(0.02f, 1f)] public float _timeRepeatRateRightKey = 0.10f;
-    private float _timeNextRightKey;
-
     [Range(0.02f, 1f)] public float _timeRepeatRateRotateKey = 0.25f;
-    private float _timeNextRotateKey;
-
     [Range(0.01f, 1f)] public float _timeRepeatRateDownKey = 0.01f;
-    private float _timeNextDownKey;
-
-    public  float _timeInterval = 0.9f;
-    private float _dropTimeInterval;
 
     [SerializeField] private GameObject _pausePanel;
+
+    public bool _isPaused = false;
+
+    public  float _timeInterval = 0.9f;
 
     private BackgroundGrid _backgroundGrid;
     private BrickShape _activeShape;
@@ -29,16 +22,14 @@ public class GameController : MonoBehaviour
     private AudioManager _audioManager;
     private ScoreController _scoreController;
 
+    private float _timeNextLeftKey;
+    private float _timeNextRightKey;
+    private float _timeNextRotateKey;
+    private float _timeNextDownKey;
+    private float _dropTimeInterval;
     private float _timeNextDown;
 
     private bool _isGameOver = false;
-    public bool _isPaused = false;
-
-
-    private void Awake()
-    {
-        
-    }
 
     // Start is called before the first frame update
     void Start()

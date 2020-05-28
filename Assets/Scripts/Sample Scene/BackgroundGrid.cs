@@ -5,13 +5,13 @@ using UnityEngine;
 public class BackgroundGrid : MonoBehaviour
 {
     public Transform brick;
-    private Transform[ , ] _grid;
 
     public int height = 35;
     public int width = 11;
     public int header = 8;
-
     public int completedRows = 0;
+
+    private Transform[ , ] _grid;
 
     private void Awake()
     {

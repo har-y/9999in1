@@ -7,26 +7,25 @@ public class ScreenFader : MonoBehaviour
 {
     public float startAlpha = 1f;
     public float targetAlpha = 0f;
-
-    private float currentAlpha;
-    private float _increment;
-
     public float delay = 0f;
     public float timeToFade = 1f;
 
     private MaskableGraphic _graphic;
-    private Color originalColor;
+    private Color _originalColor;
+
+    private float _currentAlpha;
+    private float _increment;
 
     // Use this for initialization
     void Start()
     {
         _graphic = GetComponent<MaskableGraphic>();
 
-        originalColor = _graphic.color;
+        _originalColor = _graphic.color;
 
-        currentAlpha = startAlpha;
+        _currentAlpha = startAlpha;
 
-        Color tempColor = new Color(originalColor.r, originalColor.g, originalColor.b, currentAlpha);
+        Color tempColor = new Color(_originalColor.r, _originalColor.g, _originalColor.b, _currentAlpha);
         _graphic.color = tempColor;
 
         _increment = ((targetAlpha - startAlpha) / timeToFade) * Time.deltaTime;
@@ -45,13 +44,13 @@ public class ScreenFader : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        while (Mathf.Abs(targetAlpha - currentAlpha) > 0.01f)
+        while (Mathf.Abs(targetAlpha - _currentAlpha) > 0.01f)
         {
             yield return new WaitForEndOfFrame();
 
-            currentAlpha = currentAlpha + _increment;
+            _currentAlpha = _currentAlpha + _increment;
 
-            Color tempColor = new Color(originalColor.r, originalColor.g, originalColor.b, currentAlpha);
+            Color tempColor = new Color(_originalColor.r, _originalColor.g, _originalColor.b, _currentAlpha);
             _graphic.color = tempColor;
         }
 
