@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameCotroller : MonoBehaviour
+public class GameController : MonoBehaviour
 {
 
     [Range(0.02f, 1f)] public float _timeRepeatRateLeftKey = 0.10f;
