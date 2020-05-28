@@ -164,11 +164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1c764be49920940bc6caa17fbcc426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linesPerLevel: 5
-  isLevelUp: 0
   _levelText: {fileID: 1219570299}
   _scoreText: {fileID: 1551272144}
   _highScoreText: {fileID: 1404715041}
+  _level: 0
+  linesPerLevel: 5
+  isLevelUp: 0
 --- !u!1 &39491760
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,9 +458,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74955842d669c4247b2203d9b2babaf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSoundState: 1
   icon_true: {fileID: 21300000, guid: a4e9ff8ed497d2c4d95f9a207c89c9f4, type: 3}
   icon_false: {fileID: 21300000, guid: 4b279dea6d3b5bd49b0099ca86ea15e4, type: 3}
+  defaultSoundState: 1
 --- !u!1 &149120724
 GameObject:
   m_ObjectHideFlags: 0
@@ -3193,8 +3194,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicVolume: 0.1
   fxVolume: 1
-  musicEnabled: 1
-  fxEnabled: 1
   clearRowSound: {fileID: 8300000, guid: 07a54522168c61147a310a004cd2d91c, type: 3}
   moveSound: {fileID: 8300000, guid: aa06b796019c7ac418eb87283ab2e12c, type: 3}
   dropSound: {fileID: 8300000, guid: d73c74f326bf3eb41aab739d9b24cdfe, type: 3}
@@ -3205,6 +3204,8 @@ MonoBehaviour:
   backgroundMusic: {fileID: 0}
   musicSource: {fileID: 603457829}
   iconToggle: {fileID: 85169609}
+  musicEnabled: 1
+  fxEnabled: 1
 --- !u!1 &1302441245
 GameObject:
   m_ObjectHideFlags: 0
@@ -4811,9 +4812,9 @@ RectTransform:
   m_Father: {fileID: 1026010007}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -500, y: 1050}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1957222586
@@ -4945,9 +4946,9 @@ MonoBehaviour:
   _timeRepeatRateRightKey: 0.1
   _timeRepeatRateRotateKey: 0.25
   _timeRepeatRateDownKey: 0.01
-  _timeInterval: 0.9
   _pausePanel: {fileID: 446751055}
   _isPaused: 0
+  _timeInterval: 0.9
 --- !u!1 &2040640280
 GameObject:
   m_ObjectHideFlags: 0
