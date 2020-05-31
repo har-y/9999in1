@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efea529a740ecab4da14a07ffc8ceee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _queuedOffset: {x: -0.38281, y: -0.38221, z: 0}
+  _queuedOffset: {x: -0.38281, y: 0.38221, z: 0}
   canRotate: 1
 --- !u!1 &2962883210005978406
 GameObject:
