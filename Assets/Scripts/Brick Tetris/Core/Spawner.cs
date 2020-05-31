@@ -14,7 +14,6 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         InitQueue();
-        FillQueue();
     }
 
     // Start is called before the first frame update
@@ -67,6 +66,7 @@ public class Spawner : MonoBehaviour
     private void InitQueue()
     {
         _queuedShape = null;
+        FillQueue();
     }
 
     private void FillQueue()
@@ -75,6 +75,7 @@ public class Spawner : MonoBehaviour
         {
             _queuedShape = Instantiate(GetRandomShape(), transform.position, Quaternion.identity) as BrickShape;
             _queuedShape.transform.position = queuedForms.position + _queuedShape._queuedOffset;
+
             _queuedShape.transform.localScale = new Vector3(_queueScale, _queueScale, _queueScale);
         }
     }
