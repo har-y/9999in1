@@ -5,11 +5,17 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public BrickShape[] brickShapes;
+    public Transform queuedForms;
+
+    private BrickShape _queuedShape;
+
+    private float _queueScale = 0.76f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        InitQueue();
+        FillQueue();
     }
 
     // Update is called once per frame
@@ -36,7 +42,11 @@ public class Spawner : MonoBehaviour
     public BrickShape SpawnShape()
     {
         BrickShape shape = null;
-        shape = Instantiate(GetRandomShape(), transform.position, Quaternion.identity) as BrickShape;
+
+        shape = GetQueuedShape();
+
+        shape.transform.position = transform.position;
+        shape.transform.localScale = Vector3.one;
 
         if (shape)
         {
@@ -47,5 +57,36 @@ public class Spawner : MonoBehaviour
             Debug.Log("invalid shape");
             return null;
         }
+    }
+
+    private void InitQueue()
+    {
+        _queuedShape = null;
+    }
+
+    private void FillQueue()
+    {
+        if (!_queuedShape)
+        {
+            _queuedShape = Instantiate(GetRandomShape(), transform.position, Quaternion.identity) as BrickShape;
+            _queuedShape.transform.position = queuedForms.position + _queuedShape._queuedOffset;
+            _queuedShape.transform.localScale = new Vector3(_queueScale, _queueScale, _queueScale);
+        }
+    }
+
+    private BrickShape GetQueuedShape()
+    {
+        BrickShape firstShape = null;
+
+        if (_queuedShape)
+        {
+            firstShape = _queuedShape;
+        }
+
+        _queuedShape = null;
+
+        FillQueue();
+
+        return firstShape;
     }
 }

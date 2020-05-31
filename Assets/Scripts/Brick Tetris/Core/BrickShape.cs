@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BrickShape : MonoBehaviour
 {
+    public Vector3 _queuedOffset;
+
     public bool canRotate = true;
 
     // Start is called before the first frame update
