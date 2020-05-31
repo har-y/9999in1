@@ -11,11 +11,16 @@ public class Spawner : MonoBehaviour
 
     private float _queueScale = 0.76f;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         InitQueue();
         FillQueue();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
     }
 
     // Update is called once per frame
