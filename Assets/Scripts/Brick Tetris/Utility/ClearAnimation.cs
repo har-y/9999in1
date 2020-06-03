@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationController : MonoBehaviour
+public class ClearAnimation : MonoBehaviour
 {
     public Animator _animator;
 

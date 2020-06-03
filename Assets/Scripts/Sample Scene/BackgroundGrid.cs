@@ -13,7 +13,7 @@ public class BackgroundGrid : MonoBehaviour
 
     private Transform[ , ] _grid;
 
-    public AnimationController[] _animationController;
+    public ClearAnimation[] clearAnimations;
 
     private void Awake()
     {
@@ -151,7 +151,7 @@ public class BackgroundGrid : MonoBehaviour
         {
             if (IsRowComplete(y))
             {
-                _animationController[completedRows].BrickRowClear(y);
+                clearAnimations[completedRows].BrickRowClear(y);
                 completedRows++;
             }
         }
