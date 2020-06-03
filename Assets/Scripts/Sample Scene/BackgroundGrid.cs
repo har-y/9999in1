@@ -143,24 +143,28 @@ public class BackgroundGrid : MonoBehaviour
         }
     }
 
-    public void ClearAllRows()
+    public IEnumerator ClearAllRows()
     {
         completedRows = 0;
+
 
         for (int y = 0; y < height; ++y)
         {
             if (IsRowComplete(y))
             {
                 clearAnimations[completedRows].BrickRowClear(y);
+                yield return new WaitForSeconds(0.05f);
                 completedRows++;
             }
         }
+
 
         for (int y = 0; y < height; ++y)
         {
             if (IsRowComplete(y))
             {
                 ClearRow(y);
+                yield return new WaitForSeconds(0.30f);
                 ShiftRowsDown(y + 1);
                 y--;
             }

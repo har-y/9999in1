@@ -178,7 +178,7 @@ public class GameController : MonoBehaviour
         _timeNextDownKey = Time.time;
         _timeNextDownKey = Time.time;
 
-        _backgroundGrid.ClearAllRows();
+        _backgroundGrid.StartCoroutine("ClearAllRows");
 
         if (_backgroundGrid.completedRows > 0)
         {
