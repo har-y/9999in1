@@ -13,12 +13,11 @@ public class BackgroundGrid : MonoBehaviour
 
     private Transform[ , ] _grid;
 
-    private AnimationController _animationController;
+    public AnimationController[] _animationController;
 
     private void Awake()
     {
-        _grid = new Transform[width, height];
-        _animationController = FindObjectOfType<AnimationController>();
+        _grid = new Transform[width, height];       
     }
 
     // Start is called before the first frame update
@@ -152,7 +151,7 @@ public class BackgroundGrid : MonoBehaviour
         {
             if (IsRowComplete(y))
             {
-                _animationController.BrickRowClear();
+                _animationController[completedRows].BrickRowClear(y);
                 completedRows++;
             }
         }

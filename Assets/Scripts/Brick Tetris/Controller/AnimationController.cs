@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour
 {
-    private Animator _animator;
+    public Animator _animator;
 
     // Start is called before the first frame update
     void Start()
@@ -18,9 +18,9 @@ public class AnimationController : MonoBehaviour
         
     }
 
-    public void BrickRowClear()
+    public void BrickRowClear(int y)
     {
-        transform.position = new Vector3(5f, 0f, 0f);
+        transform.position = new Vector3(5f, y, 0f);
         _animator.SetTrigger("row_clear");
     }
 }
