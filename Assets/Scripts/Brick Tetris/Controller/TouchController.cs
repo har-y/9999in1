@@ -21,7 +21,7 @@ public class TouchController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Diagnostic(" ", " ");
     }
 
     // Update is called once per frame
@@ -34,6 +34,7 @@ public class TouchController : MonoBehaviour
             if (touch.phase == TouchPhase.Began)
             {
                 _touchMovement = Vector2.zero;
+                Diagnostic(" ", " ");
             }
             else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
             {
@@ -41,6 +42,7 @@ public class TouchController : MonoBehaviour
                 if (_touchMovement.magnitude > _minimumSwipeDistance)
                 {
                     OnSwipe();
+                    Diagnostic(SwipeDiagnostic(_touchMovement), _touchMovement.ToString());
                 }
             }
         }
@@ -52,5 +54,33 @@ public class TouchController : MonoBehaviour
         {
             SwipeEvent(_touchMovement);
         }
+    }
+
+    private void Diagnostic(string text1, string text2)
+    {
+        diagnosticText1.gameObject.SetActive(useDiagnostic);
+        diagnosticText2.gameObject.SetActive(useDiagnostic);
+
+        if (diagnosticText1 && diagnosticText2)
+        {
+            diagnosticText1.text = text1;
+            diagnosticText2.text = text2;
+        }
+    }
+
+    private string SwipeDiagnostic(Vector2 swipeMovement)
+    {
+        string direction = " ";
+
+        if (Mathf.Abs(swipeMovement.x) > Mathf.Abs(swipeMovement.y))
+        {
+            direction = (swipeMovement.x >= 0) ? "right" : "left";
+        }
+        else
+        {
+            direction = (swipeMovement.y >= 0) ? "up" : "down";
+        }
+
+        return direction;
     }
 }

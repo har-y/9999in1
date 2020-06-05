@@ -2175,7 +2175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diagnosticText1: {fileID: 623756261}
   diagnosticText2: {fileID: 6335972}
-  useDiagnostic: 0
+  useDiagnostic: 1
 --- !u!1 &623756260
 GameObject:
   m_ObjectHideFlags: 0
