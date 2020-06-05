@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TouchController : MonoBehaviour
 {
     public delegate void TouchEventHandler(Vector2 swipe);
 
     public static event TouchEventHandler SwipeEvent;
+
+    public Text diagnosticText1;
+    public Text diagnosticText2;
+
+    public bool useDiagnostic = false;
 
     private Vector2 _touchMovement;
 
