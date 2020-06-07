@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
@@ -9,6 +10,8 @@ public class GameController : MonoBehaviour
     [Range(0.02f, 1f)] public float _timeRepeatRateRightKey = 0.10f;
     [Range(0.02f, 1f)] public float _timeRepeatRateRotateKey = 0.25f;
     [Range(0.01f, 1f)] public float _timeRepeatRateDownKey = 0.01f;
+
+    public Text diagnosticText;
 
     [SerializeField] private GameObject _pausePanel;
 
@@ -21,6 +24,7 @@ public class GameController : MonoBehaviour
     private Spawner _spawner;
     private AudioManager _audioManager;
     private ScoreController _scoreController;
+
 
     private float _timeNextLeftKey;
     private float _timeNextRightKey;
@@ -78,6 +82,11 @@ public class GameController : MonoBehaviour
         {
             _pausePanel.SetActive(false);
         }
+
+        if (diagnosticText)
+        {
+            diagnosticText.text = " ";
+        }
     }
 
     // Update is called once per frame
@@ -89,6 +98,18 @@ public class GameController : MonoBehaviour
         }
 
         PlayerInput();
+    }
+
+    private void OnEnable()
+    {
+        TouchController.SwipeEvent += SwipeHandler;
+        TouchController.SwipeEndEvent += SwipeEndHandler;
+    }
+
+    private void OnDisable()
+    {
+        TouchController.SwipeEvent -= SwipeHandler;
+        TouchController.SwipeEndEvent -= SwipeEndHandler;
     }
 
     private void PlayerInput()
@@ -250,6 +271,22 @@ public class GameController : MonoBehaviour
             }
 
             Time.timeScale = (_isPaused) ? 0 : 1;
+        }
+    }
+
+    private void SwipeHandler(Vector2 swipeMovement)
+    {
+        if (diagnosticText)
+        {
+            diagnosticText.text = "Swipe Detected";
+        }
+    }
+
+    private void SwipeEndHandler(Vector2 swipeMovement)
+    {
+        if (diagnosticText)
+        {
+            diagnosticText.text = " ";
         }
     }
 }
