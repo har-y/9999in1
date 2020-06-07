@@ -10,9 +10,9 @@ public class GameController : MonoBehaviour
     [Range(0.02f, 1f)] public float _timeRepeatRateRotateKey = 0.25f;
     [Range(0.01f, 1f)] public float _timeRepeatRateDownKey = 0.01f;
 
-    [Range(0.02f, 1f)] public float _timeRepeatRateLeftSwipe = 0.50f;
-    [Range(0.02f, 1f)] public float _timeRepeatRateRightSwipe = 0.50f;
-    [Range(0.01f, 1f)] public float _timeRepeatRateDownSwipe = 0.2f;
+    [Range(0.02f, 1f)] public float _timeRepeatRateLeftSwipe = 0.90f;
+    [Range(0.02f, 1f)] public float _timeRepeatRateRightSwipe = 0.90f;
+    [Range(0.01f, 1f)] public float _timeRepeatRateDownSwipe = 0.4f;
 
     [SerializeField] private GameObject _pausePanel;
 
@@ -109,14 +109,14 @@ public class GameController : MonoBehaviour
 
     private void OnEnable()
     {
-        TouchController.SwipeEvent += SwipeHandler;
-        TouchController.SwipeEndEvent += SwipeEndHandler;
+        TouchController.DragEvent += SwipeHandler;
+        TouchController.SwipeEvent += SwipeEndHandler;
     }
 
     private void OnDisable()
     {
-        TouchController.SwipeEvent -= SwipeHandler;
-        TouchController.SwipeEndEvent -= SwipeEndHandler;
+        TouchController.DragEvent -= SwipeHandler;
+        TouchController.SwipeEvent -= SwipeEndHandler;
     }
 
     private void PlayerInput()
