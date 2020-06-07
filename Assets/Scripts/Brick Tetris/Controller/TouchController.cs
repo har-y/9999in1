@@ -13,8 +13,8 @@ public class TouchController : MonoBehaviour
 
     public bool useDiagnostic = false;
 
-    [Range(50, 150)] public int _minimumDragDistance = 100;
-    [Range(50, 250)] public int _minimumSwipeDistance = 200;
+    [Range(50, 250)] public int _minimumSwipeDistance = 100;
+    [Range(50, 150)] public int _minimumDragDistance = 50;
 
     public Text diagnosticText1;
     public Text diagnosticText2;
@@ -22,7 +22,7 @@ public class TouchController : MonoBehaviour
     private Vector2 _touchMovement;
 
     private float _tapTimeMax = 0;
-    public float _tapTimeWindow = 0.1f;
+    public float _tapTimeWindow = 0.2f;
 
     // Start is called before the first frame update
     void Start()

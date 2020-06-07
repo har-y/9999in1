@@ -2173,9 +2173,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3b928070d0b7b45b6d90035f4ae44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useDiagnostic: 0
+  _minimumSwipeDistance: 100
+  _minimumDragDistance: 50
   diagnosticText1: {fileID: 623756261}
   diagnosticText2: {fileID: 6335972}
-  useDiagnostic: 0
+  _tapTimeWindow: 0.2
 --- !u!1 &623756260
 GameObject:
   m_ObjectHideFlags: 0
@@ -6382,6 +6385,8 @@ MonoBehaviour:
   _timeRepeatRateRightKey: 0.1
   _timeRepeatRateRotateKey: 0.25
   _timeRepeatRateDownKey: 0.01
+  _timeRepeatSwipe: 0.2
+  _timeRepeatDrag: 0.2
   _pausePanel: {fileID: 446751055}
   _isPaused: 0
   _timeInterval: 0.9

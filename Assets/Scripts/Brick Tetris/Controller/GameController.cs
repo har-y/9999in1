@@ -10,9 +10,8 @@ public class GameController : MonoBehaviour
     [Range(0.02f, 1f)] public float _timeRepeatRateRotateKey = 0.25f;
     [Range(0.01f, 1f)] public float _timeRepeatRateDownKey = 0.01f;
 
-    [Range(0.02f, 1f)] public float _timeRepeatRateLeftSwipe = 0.90f;
-    [Range(0.02f, 1f)] public float _timeRepeatRateRightSwipe = 0.90f;
-    [Range(0.01f, 1f)] public float _timeRepeatRateDownSwipe = 0.4f;
+    [Range(0.05f, 1f)] public float _timeRepeatSwipe = 0.20f;
+    [Range(0.05f, 1f)] public float _timeRepeatDrag = 0.20f;
 
     [SerializeField] private GameObject _pausePanel;
 
@@ -29,19 +28,21 @@ public class GameController : MonoBehaviour
     private enum Direction { none, left, right, up, down }
 
     private Direction _swipeDirection = Direction.none;
-    private Direction _swipeEndDirection = Direction.none;
+    private Direction _dragDirection = Direction.none;
 
     private float _timeNextLeftKey;
     private float _timeNextRightKey;
     private float _timeNextRotateKey;
     private float _timeNextDownKey;
-    private float _timeNextLeftSwipe;
-    private float _timeNextRightSwipe;
-    private float _timeNextDownSwipe;
+
     private float _dropTimeInterval;
     private float _timeNextDown;
 
+    private float _timeNextSwipe;
+    private float _timeNextDrag;
+
     private bool _isGameOver = false;
+    private bool _didTap = false;
 
     // Start is called before the first frame update
     void Start()
@@ -50,10 +51,6 @@ public class GameController : MonoBehaviour
         _timeNextRightKey = Time.time + _timeRepeatRateRightKey;
         _timeNextDownKey = Time.time + _timeRepeatRateDownKey;
         _timeNextRotateKey = Time.time + _timeRepeatRateRotateKey;
-
-        _timeNextLeftSwipe = Time.time + _timeRepeatRateLeftSwipe;
-        _timeNextRightSwipe = Time.time + _timeRepeatRateRightSwipe;
-        _timeNextDownSwipe = Time.time + _timeRepeatRateDownSwipe;
 
         _dropTimeInterval = _timeInterval;
 
@@ -109,14 +106,16 @@ public class GameController : MonoBehaviour
 
     private void OnEnable()
     {
-        TouchController.DragEvent += SwipeHandler;
-        TouchController.SwipeEvent += SwipeEndHandler;
+        TouchController.SwipeEvent += SwipeHandler;
+        TouchController.DragEvent += DragHandler;
+        TouchController.TapEvent += TapHandler;
     }
 
     private void OnDisable()
     {
-        TouchController.DragEvent -= SwipeHandler;
-        TouchController.SwipeEvent -= SwipeEndHandler;
+        TouchController.SwipeEvent -= SwipeHandler;
+        TouchController.DragEvent -= DragHandler;
+        TouchController.TapEvent -= TapHandler;
     }
 
     private void PlayerInput()
@@ -137,36 +136,39 @@ public class GameController : MonoBehaviour
         {
             MoveDown();
         }
-        else if ((_swipeDirection == Direction.right && Time.time > _timeNextRightSwipe) || _swipeEndDirection == Direction.right)
+        else if ((_swipeDirection == Direction.right && Time.time > _timeNextSwipe) || (_dragDirection == Direction.right && Time.time > _timeNextDrag))
         {
             MoveRight();
 
-            _swipeDirection = Direction.none;
-            _swipeEndDirection = Direction.none;
+            _timeNextSwipe = Time.time + _timeRepeatSwipe;
+            _timeNextDrag = Time.time + _timeRepeatDrag;
         }
-        else if ((_swipeDirection == Direction.left && Time.time > _timeNextLeftSwipe) || _swipeEndDirection == Direction.left)
+        else if ((_swipeDirection == Direction.left && Time.time > _timeNextSwipe) || (_dragDirection == Direction.left && Time.time > _timeNextDrag))
         {
             MoveLeft();
 
-            _swipeDirection = Direction.none;
-            _swipeEndDirection = Direction.none;
+            _timeNextSwipe = Time.time + _timeRepeatSwipe;
+            _timeNextDrag = Time.time + _timeRepeatDrag;
         }
-        else if (_swipeEndDirection == Direction.up)
+        else if ((_swipeDirection == Direction.up && Time.time > _timeNextSwipe) || (_didTap))
         {
             Rotate();
 
-            _swipeEndDirection = Direction.none;
+            _timeNextSwipe = Time.time + _timeRepeatSwipe;
+            _didTap = false;
         }
-        else if (_swipeDirection == Direction.down && Time.time > _timeNextDownSwipe)
+        else if (_dragDirection == Direction.down && Time.time > _timeNextDrag)
         {
-            MoveDown();
-
-            _swipeDirection = Direction.none;
+            MoveDown();          
         }
         else if (Input.GetButtonDown("Pause"))
         {
             TogglePause();
         }
+
+        _dragDirection = Direction.none;
+        _swipeDirection = Direction.none;
+        _didTap = false;
     }
 
     private void MoveDown()
@@ -332,9 +334,14 @@ public class GameController : MonoBehaviour
         _swipeDirection = GetDirection(swipeMovement);
     }
 
-    private void SwipeEndHandler(Vector2 swipeMovement)
+    private void DragHandler(Vector2 dragMovement)
     {
-        _swipeEndDirection = GetDirection(swipeMovement);
+        _dragDirection = GetDirection(dragMovement);
+    }
+
+    private void TapHandler(Vector2 tapMovement)
+    {
+        _didTap = true;
     }
 
     Direction GetDirection(Vector2 swipeMovement)
