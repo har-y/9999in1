@@ -6417,8 +6417,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6ee93944e8c0241817878d532ac0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeRepeatRateLeftKey: 0.9
-  _timeRepeatRateRightKey: 0.9
+  _timeRepeatRateLeftKey: 0.3
+  _timeRepeatRateRightKey: 0.3
   _timeRepeatRateRotateKey: 0.25
   _timeRepeatRateDownKey: 0.01
   _timeRepeatSwipe: 0.2

@@ -217,7 +217,7 @@ public class GameController : MonoBehaviour
     private void MoveLeft()
     {
         _activeShape.MoveLeft();
-        _timeNextRightKey = Time.time + _timeRepeatRateLeftKey;
+        _timeNextLeftKey = Time.time + _timeRepeatRateLeftKey;
 
         if (!_backgroundGrid.IsValidPosition(_activeShape))
         {
@@ -233,7 +233,7 @@ public class GameController : MonoBehaviour
     private void MoveRight()
     {
         _activeShape.MoveRight();
-        _timeNextLeftKey = Time.time + _timeRepeatRateRightKey;
+        _timeNextRightKey = Time.time + _timeRepeatRateRightKey;
 
 
         if (!_backgroundGrid.IsValidPosition(_activeShape))
