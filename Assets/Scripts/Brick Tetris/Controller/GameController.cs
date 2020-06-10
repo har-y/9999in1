@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    [Range(0.02f, 1f)] public float _timeRepeatRateLeftKey = 0.10f;
-    [Range(0.02f, 1f)] public float _timeRepeatRateRightKey = 0.10f;
+    [Range(0.02f, 1f)] public float _timeRepeatRateLeftKey = 0.30f;
+    [Range(0.02f, 1f)] public float _timeRepeatRateRightKey = 0.30f;
     [Range(0.02f, 1f)] public float _timeRepeatRateRotateKey = 0.25f;
     [Range(0.01f, 1f)] public float _timeRepeatRateDownKey = 0.01f;
 
@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
 
     public  float _timeInterval = 0.9f;
 
+    private Animator _animator;
     private BackgroundGrid _backgroundGrid;
     private BrickShape _activeShape;
     private Spawner _spawner;
@@ -83,6 +84,12 @@ public class GameController : MonoBehaviour
 
         _scoreController = FindObjectOfType<ScoreController>();
         if (!_scoreController)
+        {
+            Debug.Log("not assign object");
+        }
+
+        _animator = GetComponent<Animator>();
+        if (!_animator)
         {
             Debug.Log("not assign object");
         }
@@ -274,61 +281,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void GameOver()
-    {
-        _activeShape.MoveUp();
-
-        PlaySound(_audioManager.loseSound, 1f);
-
-        _isGameOver = true;
-        Debug.Log(_activeShape.name + " is over the limit");
-
-        PlaySound(_audioManager.gameOverSound, 0.25f);
-    }
-
-    public void Restart()
-    {
-        Time.timeScale = 1;
-        Debug.Log("Restarted");
-        SceneManager.LoadScene(0);
-    }
-
-    public void Exit()
-    {
-        Debug.Log("Exit");
-        Application.Quit();
-    }
-
-    private void PlaySound(AudioClip clip, float volume)
-    {
-        if (_audioManager.fxEnabled && clip)
-        {
-            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, Mathf.Clamp(_audioManager.fxVolume * volume, 0.05f, 1f));
-        }
-    }
-
-    public void TogglePause()
-    {
-        if (_isGameOver)
-        {
-            return;
-        }
-
-        _isPaused = !_isPaused;
-
-        if (_pausePanel)
-        {
-            _pausePanel.SetActive(_isPaused);
-
-            if (_audioManager)
-            {
-                _audioManager.musicSource.volume = (_isPaused) ? _audioManager.musicVolume * 0.25f : _audioManager.musicVolume;
-            }
-
-            Time.timeScale = (_isPaused) ? 0 : 1;
-        }
-    }
-
     private void SwipeHandler(Vector2 swipeMovement)
     {
         _swipeDirection = GetDirection(swipeMovement);
@@ -358,5 +310,75 @@ public class GameController : MonoBehaviour
         }
 
         return swipeDirection;
+    }
+
+    private void GameOver()
+    {
+        _activeShape.MoveUp();
+
+        PlaySound(_audioManager.loseSound, 1f);
+
+        _isGameOver = true;
+
+        Debug.Log(_activeShape.name + " is over the limit");
+
+        PlaySound(_audioManager.gameOverSound, 0.25f);
+
+        _animator.SetTrigger("brick_gameover");
+    }
+
+    public void Restart()
+    {
+        Time.timeScale = 1;
+        Debug.Log("Restarted");
+        SceneManager.LoadScene(0);
+    }
+
+    public void RestartClear()
+    {
+        if (_isGameOver)
+        {
+            BrickShape[] tmp = FindObjectsOfType<BrickShape>();
+            for (int i = 0; i < tmp.Length; i++)
+            {
+                Destroy(tmp[i].gameObject);
+            }
+        }
+    }
+
+    public void Exit()
+    {
+        Debug.Log("Exit");
+        Application.Quit();
+    }
+
+    private void PlaySound(AudioClip clip, float volume)
+    {
+        if (_audioManager.fxEnabled && clip)
+        {
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, Mathf.Clamp(_audioManager.fxVolume * volume, 0.05f, 1f));
+        }
+    }
+
+    public void TogglePause()
+    {
+        //if (_isGameOver)
+        //{
+        //    return;
+        //}
+
+        _isPaused = !_isPaused;
+
+        if (_pausePanel)
+        {
+            _pausePanel.SetActive(_isPaused);
+
+            if (_audioManager)
+            {
+                _audioManager.musicSource.volume = (_isPaused) ? _audioManager.musicVolume * 0.25f : _audioManager.musicVolume;
+            }
+
+            Time.timeScale = (_isPaused) ? 0 : 1;
+        }
     }
 }
