@@ -338,10 +338,11 @@ public class GameController : MonoBehaviour
     {
         if (_isGameOver)
         {
-            BrickShape[] tmp = FindObjectsOfType<BrickShape>();
-            for (int i = 0; i < tmp.Length; i++)
+            BrickShape[] shapes = FindObjectsOfType<BrickShape>();
+
+            for (int i = 0; i < shapes.Length; i++)
             {
-                Destroy(tmp[i].gameObject);
+                Destroy(shapes[i].gameObject);
             }
         }
     }
@@ -362,10 +363,10 @@ public class GameController : MonoBehaviour
 
     public void TogglePause()
     {
-        //if (_isGameOver)
-        //{
-        //    return;
-        //}
+        if (_isGameOver)
+        {
+            return;
+        }
 
         _isPaused = !_isPaused;
 
