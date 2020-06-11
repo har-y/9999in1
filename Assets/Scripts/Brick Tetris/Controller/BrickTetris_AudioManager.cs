@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class BrickTetris_AudioManager : MonoBehaviour
 {
     [Range(0f, 1f)] public float musicVolume = 1f;
     [Range(0f, 1f)] public float fxVolume = 1f;
@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip levelUpSound;
     public AudioClip backgroundMusic;
     public AudioSource musicSource;
-    public IconToggle iconToggle;
+    public BrickTetris_IconToggle iconToggle;
 
     public bool musicEnabled = true;
     public bool fxEnabled = true;

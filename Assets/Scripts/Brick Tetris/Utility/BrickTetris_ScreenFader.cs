@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScreenFader : MonoBehaviour
+public class BrickTetris_ScreenFader : MonoBehaviour
 {
     public float startAlpha = 1f;
     public float targetAlpha = 0f;

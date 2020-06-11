@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreController : MonoBehaviour
+public class BrickTetris_ScoreController : MonoBehaviour
 {
     public Text _levelText;
     public Text _scoreText;

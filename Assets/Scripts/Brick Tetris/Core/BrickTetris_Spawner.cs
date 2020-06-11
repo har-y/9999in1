@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class BrickTetris_Spawner : MonoBehaviour
 {
     public Transform queuedForms;
-    public BrickShape[] brickShapes;
+    public BrickTetris_BrickShape[] brickShapes;
 
-    private BrickShape _queuedShape;
+    private BrickTetris_BrickShape _queuedShape;
 
     private float _queueScale = 0.76f;
 
@@ -23,7 +23,7 @@ public class Spawner : MonoBehaviour
         
     }
 
-    private BrickShape GetRandomShape()
+    private BrickTetris_BrickShape GetRandomShape()
     {
         int i = Random.Range(0, brickShapes.Length);
 
@@ -38,9 +38,9 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public BrickShape SpawnShape()
+    public BrickTetris_BrickShape SpawnShape()
     {
-        BrickShape shape = null;
+        BrickTetris_BrickShape shape = null;
 
         shape = GetQueuedShape();
 
@@ -76,9 +76,9 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    private BrickShape GetQueuedShape()
+    private BrickTetris_BrickShape GetQueuedShape()
     {
-        BrickShape firstShape = null;
+        BrickTetris_BrickShape firstShape = null;
 
         if (_queuedShape)
         {

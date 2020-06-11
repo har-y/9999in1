@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TouchController : MonoBehaviour
+public class BrickTetris_TouchController : MonoBehaviour
 {
     public delegate void TouchEventHandler(Vector2 swipe);
 

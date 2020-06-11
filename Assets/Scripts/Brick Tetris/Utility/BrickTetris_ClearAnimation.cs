@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClearAnimation : MonoBehaviour
+public class BrickTetris_ClearAnimation : MonoBehaviour
 {
     private Animator _animator;
 

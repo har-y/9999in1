@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackgroundGrid : MonoBehaviour
+public class BrickTetris_BackgroundGrid : MonoBehaviour
 {
     public Transform brick;
 
@@ -13,7 +13,7 @@ public class BackgroundGrid : MonoBehaviour
 
     private Transform[ , ] _grid;
 
-    public ClearAnimation[] clearAnimations;
+    public BrickTetris_ClearAnimation[] clearAnimations;
 
     private void Awake()
     {
@@ -60,16 +60,16 @@ public class BackgroundGrid : MonoBehaviour
         return (x >= 0 && x < width && y >= 0);
     }
 
-    private bool IsValidOccupied(int x, int y, BrickShape shape)
+    private bool IsValidOccupied(int x, int y, BrickTetris_BrickShape shape)
     {
         return (_grid[x,y] != null && _grid[x, y].parent != shape.transform);
     }
 
-    public bool IsValidPosition(BrickShape shape)
+    public bool IsValidPosition(BrickTetris_BrickShape shape)
     {
         foreach (Transform child in shape.transform)
         {
-            Vector2 position = Vectorf.Round(child.position);
+            Vector2 position = BrickTetris_Vectorf.Round(child.position);
 
             if (!IsInGrid((int) position.x, (int) position.y))
             {
@@ -84,7 +84,7 @@ public class BackgroundGrid : MonoBehaviour
         return true;
     }
 
-    public void StoreShapeInGrid(BrickShape shape)
+    public void StoreShapeInGrid(BrickTetris_BrickShape shape)
     {
         if (shape == null)
         {
@@ -93,7 +93,7 @@ public class BackgroundGrid : MonoBehaviour
 
         foreach (Transform child in shape.transform)
         {
-            Vector2 position = Vectorf.Round(child.position);
+            Vector2 position = BrickTetris_Vectorf.Round(child.position);
             _grid[(int) position.x, (int) position.y] = child;
         }
     }
@@ -161,7 +161,7 @@ public class BackgroundGrid : MonoBehaviour
         }
     }
 
-    public bool IsOverLimit(BrickShape shape)
+    public bool IsOverLimit(BrickTetris_BrickShape shape)
     {
         foreach (Transform child in shape.transform)
         {

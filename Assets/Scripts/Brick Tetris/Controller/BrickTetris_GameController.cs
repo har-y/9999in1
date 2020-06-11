@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour
+public class BrickTetris_GameController : MonoBehaviour
 {
     [Range(0.02f, 1f)] public float _timeRepeatRateLeftKey = 0.30f;
     [Range(0.02f, 1f)] public float _timeRepeatRateRightKey = 0.30f;
@@ -20,11 +20,11 @@ public class GameController : MonoBehaviour
     public  float _timeInterval = 0.9f;
 
     private Animator _animator;
-    private BackgroundGrid _backgroundGrid;
-    private BrickShape _activeShape;
-    private Spawner _spawner;
-    private AudioManager _audioManager;
-    private ScoreController _scoreController;
+    private BrickTetris_BackgroundGrid _backgroundGrid;
+    private BrickTetris_BrickShape _activeShape;
+    private BrickTetris_Spawner _spawner;
+    private BrickTetris_AudioManager _audioManager;
+    private BrickTetris_ScoreController _scoreController;
 
     private enum Direction { none, left, right, up, down }
 
@@ -55,20 +55,20 @@ public class GameController : MonoBehaviour
 
         _dropTimeInterval = _timeInterval;
 
-        _backgroundGrid = FindObjectOfType<BackgroundGrid>();
+        _backgroundGrid = FindObjectOfType<BrickTetris_BackgroundGrid>();
         if (!_backgroundGrid)
         {
             Debug.Log("not assign object");
         }
 
-        _spawner = FindObjectOfType<Spawner>();
+        _spawner = FindObjectOfType<BrickTetris_Spawner>();
         if (!_spawner)
         {
             Debug.Log("not assign object");
         }
         else
         {
-            _spawner.transform.position = Vectorf.Round(_spawner.transform.position);
+            _spawner.transform.position = BrickTetris_Vectorf.Round(_spawner.transform.position);
 
             if (!_activeShape)
             {
@@ -76,13 +76,13 @@ public class GameController : MonoBehaviour
             }
         }
 
-        _audioManager = FindObjectOfType<AudioManager>();
+        _audioManager = FindObjectOfType<BrickTetris_AudioManager>();
         if (!_audioManager)
         {
             Debug.Log("not assign object");
         }
 
-        _scoreController = FindObjectOfType<ScoreController>();
+        _scoreController = FindObjectOfType<BrickTetris_ScoreController>();
         if (!_scoreController)
         {
             Debug.Log("not assign object");
@@ -113,16 +113,16 @@ public class GameController : MonoBehaviour
 
     private void OnEnable()
     {
-        TouchController.SwipeEvent += SwipeHandler;
-        TouchController.DragEvent += DragHandler;
-        TouchController.TapEvent += TapHandler;
+        BrickTetris_TouchController.SwipeEvent += SwipeHandler;
+        BrickTetris_TouchController.DragEvent += DragHandler;
+        BrickTetris_TouchController.TapEvent += TapHandler;
     }
 
     private void OnDisable()
     {
-        TouchController.SwipeEvent -= SwipeHandler;
-        TouchController.DragEvent -= DragHandler;
-        TouchController.TapEvent -= TapHandler;
+        BrickTetris_TouchController.SwipeEvent -= SwipeHandler;
+        BrickTetris_TouchController.DragEvent -= DragHandler;
+        BrickTetris_TouchController.TapEvent -= TapHandler;
     }
 
     private void PlayerInput()
@@ -338,7 +338,7 @@ public class GameController : MonoBehaviour
     {
         if (_isGameOver)
         {
-            BrickShape[] shapes = FindObjectsOfType<BrickShape>();
+            BrickTetris_BrickShape[] shapes = FindObjectsOfType<BrickTetris_BrickShape>();
 
             for (int i = 0; i < shapes.Length; i++)
             {

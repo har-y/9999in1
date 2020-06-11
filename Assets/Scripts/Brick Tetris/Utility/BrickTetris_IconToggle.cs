@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class IconToggle : MonoBehaviour
+public class BrickTetris_IconToggle : MonoBehaviour
 {
     public Sprite icon_true;
     public Sprite icon_false;

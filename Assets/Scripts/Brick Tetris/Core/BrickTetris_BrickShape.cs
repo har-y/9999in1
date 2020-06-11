@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrickShape : MonoBehaviour
+public class BrickTetris_BrickShape : MonoBehaviour
 {
     public Vector3 _queuedOffset;
 
