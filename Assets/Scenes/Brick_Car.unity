@@ -1653,7 +1653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 701442104}
-  - component: {fileID: 701442106}
+  - component: {fileID: 701442105}
   m_Layer: 0
   m_Name: Background Grid
   m_TagString: Untagged
@@ -1676,7 +1676,7 @@ Transform:
   m_Father: {fileID: 497927472}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &701442106
+--- !u!114 &701442105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1685,7 +1685,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 701442103}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b50a139cae2525b45aa82a898bd5d551, type: 3}
+  m_Script: {fileID: 11500000, guid: e49e5f03aad28a8459ffe7e2caed4b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   brick: {fileID: 7618668256593768564, guid: 1a750829be18e814e94bfc2fdf8cfaed, type: 3}
