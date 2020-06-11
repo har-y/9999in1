@@ -50,9 +50,7 @@ public class BrickTetris_BackgroundGrid : MonoBehaviour
         else
         {
             Debug.Log("assign sprite object!");
-
         }
-
     }
 
     private bool IsInGrid(int x, int y)
