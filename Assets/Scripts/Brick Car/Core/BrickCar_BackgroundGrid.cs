@@ -55,16 +55,16 @@ public class BrickCar_BackgroundGrid : MonoBehaviour
         return (x >= 0 && x < width && y >= 0);
     }
 
-    private bool IsValidOccupied(int x, int y, BrickTetris_BrickShape shape)
+    private bool IsValidOccupied(int x, int y, BrickCar_BrickShape shape)
     {
         return (_grid[x, y] != null && _grid[x, y].parent != shape.transform);
     }
 
-    public bool IsValidPosition(BrickTetris_BrickShape shape)
+    public bool IsValidPosition(BrickCar_BrickShape shape)
     {
         foreach (Transform child in shape.transform)
         {
-            Vector2 position = BrickTetris_Vectorf.Round(child.position);
+            Vector2 position = BrickCar_Vectorf.Round(child.position);
 
             if (!IsInGrid((int)position.x, (int)position.y))
             {
@@ -79,7 +79,7 @@ public class BrickCar_BackgroundGrid : MonoBehaviour
         return true;
     }
 
-    public void StoreShapeInGrid(BrickTetris_BrickShape shape)
+    public void StoreShapeInGrid(BrickCar_BrickShape shape)
     {
         if (shape == null)
         {
@@ -88,16 +88,28 @@ public class BrickCar_BackgroundGrid : MonoBehaviour
 
         foreach (Transform child in shape.transform)
         {
-            Vector2 position = BrickTetris_Vectorf.Round(child.position);
+            Vector2 position = BrickCar_Vectorf.Round(child.position);
             _grid[(int)position.x, (int)position.y] = child;
         }
     }
 
-    public bool IsOverLimit(BrickTetris_BrickShape shape)
+    public bool IsOverLimit(BrickCar_BrickShape shape)
     {
         foreach (Transform child in shape.transform)
         {
             if (child.transform.position.y >= (height - header))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool IsBelowLimit(BrickCar_BrickShape shape)
+    {
+        foreach (Transform child in shape.transform)
+        {
+            if (child.transform.position.y <= -5)
             {
                 return true;
             }

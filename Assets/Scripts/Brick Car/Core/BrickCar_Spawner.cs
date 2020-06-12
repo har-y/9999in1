@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class BrickCar_Spawner : MonoBehaviour
 {
-    public Transform queuedForms;
-    public BrickCar_BrickShape[] brickShapes;
+    public BrickCar_BrickShape playerShape;
+    public BrickCar_BrickShape[] enemyShapes;
 
-    private BrickCar_BrickShape _queuedShape;
+    private BrickCar_BrickShape enemyShape;
 
-    private float _queueScale = 0.76f;
+    private BrickCar_BrickShape _queuedPlayerShape;
+    private BrickCar_BrickShape _queuedEnemyShape;
+
+    public Transform playerPosition;
+    public Transform enemyContrainer;
 
     // Start is called before the first frame update
     void Start()
@@ -23,13 +27,13 @@ public class BrickCar_Spawner : MonoBehaviour
         
     }
 
-    private BrickCar_BrickShape GetRandomShape()
+    private BrickCar_BrickShape GetRandomEnemyShape()
     {
-        int i = Random.Range(0, brickShapes.Length);
+        int i = Random.Range(0, enemyShapes.Length);
 
-        if (brickShapes[i])
+        if (enemyShapes[i])
         {
-            return brickShapes[i];
+            return enemyShapes[i];
         }
         else
         {
@@ -38,18 +42,11 @@ public class BrickCar_Spawner : MonoBehaviour
         }
     }
 
-    public BrickCar_BrickShape SpawnShape()
+    private BrickCar_BrickShape GetPlayerShape()
     {
-        BrickCar_BrickShape shape = null;
-
-        shape = GetQueuedShape();
-
-        shape.transform.position = transform.position;
-        shape.transform.localScale = Vector3.one;
-
-        if (shape)
+        if (playerShape)
         {
-            return shape;
+            return playerShape;
         }
         else
         {
@@ -57,38 +54,58 @@ public class BrickCar_Spawner : MonoBehaviour
             return null;
         }
     }
+
 
     private void InitQueue()
     {
-        _queuedShape = null;
+        //_queuedPlayerShape = null;
+        //_queuedEnemyShape = null;
 
-        FillQueue();
+        //FillQueue();
     }
 
     private void FillQueue()
     {
-        if (!_queuedShape)
-        {
-            _queuedShape = Instantiate(GetRandomShape(), transform.position, Quaternion.identity);
+        //if (!_queuedPlayerShape)
+        //{
+        //    SpawnPlayerShape();
+        //}
 
-            _queuedShape.transform.position = queuedForms.position + _queuedShape._queuedOffset;
-            _queuedShape.transform.localScale = new Vector3(_queueScale, _queueScale, _queueScale);
-        }
+        //if (!_queuedEnemyShape)
+        //{
+        //    SpawnEnemyShape();
+        //}
     }
 
-    private BrickCar_BrickShape GetQueuedShape()
+    public BrickCar_BrickShape SpawnPlayerShape()
     {
-        BrickCar_BrickShape firstShape = null;
+        _queuedPlayerShape = Instantiate(GetPlayerShape(), playerPosition.position, Quaternion.identity);
+        _queuedPlayerShape.transform.parent = playerPosition.transform;
 
-        if (_queuedShape)
+        if (_queuedPlayerShape)
         {
-            firstShape = _queuedShape;
+            return _queuedPlayerShape;
         }
+        else
+        {
+            Debug.Log("invalid shape");
+            return null;
+        }
+    }
+    public BrickCar_BrickShape SpawnEnemyShape()
+    {
+        _queuedEnemyShape = Instantiate(GetRandomEnemyShape(), transform.position, Quaternion.identity);
+        _queuedEnemyShape.transform.position = transform.position + _queuedEnemyShape._queuedOffset;
+        _queuedEnemyShape.transform.parent = enemyContrainer.transform;
 
-        _queuedShape = null;
-
-        FillQueue();
-
-        return firstShape;
+        if (_queuedEnemyShape)
+        {
+            return _queuedEnemyShape;
+        }
+        else
+        {
+            Debug.Log("invalid shape");
+            return null;
+        }
     }
 }
