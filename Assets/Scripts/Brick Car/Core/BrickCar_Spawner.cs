@@ -11,7 +11,7 @@ public class BrickCar_Spawner : MonoBehaviour
     public Transform enemyContrainer;
 
     private BrickCar_BrickShape _queuedPlayerShape;
-    public BrickCar_BrickShape _queuedEnemyShape;
+    private BrickCar_BrickShape _queuedEnemyShape;
 
     // Start is called before the first frame update
     void Start()

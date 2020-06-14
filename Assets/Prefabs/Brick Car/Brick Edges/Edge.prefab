@@ -173,7 +173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5737702153400295451}
-  - component: {fileID: -2694614136715452104}
+  - component: {fileID: 5418385146584613514}
   m_Layer: 0
   m_Name: Edge
   m_TagString: Untagged
@@ -198,7 +198,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-2694614136715452104
+--- !u!114 &5418385146584613514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
