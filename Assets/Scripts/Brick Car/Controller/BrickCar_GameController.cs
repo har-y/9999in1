@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,7 @@ public class BrickCar_GameController : MonoBehaviour
 
     public float _timeInterval = 0.9f;
     public float _timeEnemyInterval = 0.9f;
+    public float _timeEnemySpawnInterval = 3f;
 
     private Animator _animator;
     private BrickCar_BackgroundGrid _backgroundGrid;
@@ -26,6 +28,8 @@ public class BrickCar_GameController : MonoBehaviour
     private BrickCar_Spawner _spawner;
     private BrickCar_AudioManager _audioManager;
     private BrickCar_ScoreController _scoreController;
+
+    GameObject tmp;
 
     private enum Direction { none, left, right, up, down }
 
@@ -39,8 +43,10 @@ public class BrickCar_GameController : MonoBehaviour
 
     private float _dropTimeInterval;
     private float _dropTimeEnemyInterval;
+    private float _dropTimeEnemySpawnInterval;
     private float _timeNextDown;
     private float _timeNextEnemyDown;
+    private float _timeNextEnemySpawn;
 
     private float _timeNextSwipe;
     private float _timeNextDrag;
@@ -57,6 +63,7 @@ public class BrickCar_GameController : MonoBehaviour
 
         _dropTimeInterval = _timeInterval;
         _dropTimeEnemyInterval = _timeEnemyInterval;
+        _dropTimeEnemySpawnInterval = _timeEnemySpawnInterval;
 
         _backgroundGrid = FindObjectOfType<BrickCar_BackgroundGrid>();
         if (!_backgroundGrid)
@@ -75,7 +82,7 @@ public class BrickCar_GameController : MonoBehaviour
 
             if (!_playerShape)
             {
-                _playerShape = _spawner.SpawnPlayerShape();
+                _playerShape = _spawner.SpawnPlayerShape();              
             }
             if (!_enemyShape)
             {
@@ -110,12 +117,13 @@ public class BrickCar_GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (!_backgroundGrid || !_spawner || !_playerShape || !_audioManager || !_scoreController || _isGameOver)
-        //{
-        //    return;
-        //}
+        if (!_backgroundGrid || !_spawner || !_playerShape )//|| !_enemyShape)// || !_audioManager || !_scoreController || _isGameOver)
+        {
+            return;
+        }
 
         PlayerInput();
+        EnemySpawn();
     }
 
     private void OnEnable()
@@ -142,9 +150,9 @@ public class BrickCar_GameController : MonoBehaviour
         {
             MoveLeft();
         }
-        else if ((Input.GetButton("MoveDown") && (Time.time > _timeNextDownKey)))// || (Time.time > _timeNextDown))
+        else if ((Input.GetButton("MoveDown") && (Time.time > _timeNextDownKey)) || (Time.time > _timeNextDown))
         {
-            MoveDown();
+            MoveDown();           
         }
         else if ((_swipeDirection == Direction.right && Time.time > _timeNextSwipe) || (_dragDirection == Direction.right && Time.time > _timeNextDrag))
         {
@@ -171,27 +179,27 @@ public class BrickCar_GameController : MonoBehaviour
         {
             TogglePause();
         }
-        else if ((Time.time > _timeNextEnemyDown))
-        {
-            EnemyMoveDown();
-        }
 
         _dragDirection = Direction.none;
         _swipeDirection = Direction.none;
         _didTap = false;
     }
 
-    private void EnemyMoveDown()
+    private void EnemySpawn()
     {
-        if (_enemyShape)
+
+        if (!_isGameOver)
         {
-            _enemyShape.MoveDown();
-
-            _timeNextEnemyDown = Time.time + _dropTimeEnemyInterval;
-
-            if (_backgroundGrid.IsBelowLimit(_enemyShape))
+            if (Time.time > _timeNextEnemyDown)
             {
-                Destroy(_enemyShape.gameObject);
+                _timeNextEnemyDown = Time.time + _dropTimeEnemyInterval;
+                _enemyShape.MoveDown();
+            }
+
+            if (Time.time > _timeNextEnemySpawn)
+            {
+                _timeNextEnemySpawn = Time.time + _dropTimeEnemySpawnInterval;
+                //_enemyShape = _spawner.SpawnEnemyShape();
             }
         }
     }
@@ -201,17 +209,20 @@ public class BrickCar_GameController : MonoBehaviour
         _timeNextDown = Time.time + _dropTimeInterval;
         _timeNextDownKey = Time.time + _timeRepeatRateDownKey;
 
-        if (!_backgroundGrid.IsValidPosition(_playerShape))
-        {
-            if (_backgroundGrid.IsOverLimit(_playerShape))
-            {
-                GameOver();
-            }
-            else
-            {
-                LandShape();
-            }
-        }
+        //_enemyShape.MoveDown();
+        //_activeShape.MoveDown();
+
+        //if (!_backgroundGrid.IsValidPosition(_activeShape))
+        //{
+        //    if (_backgroundGrid.IsOverLimit(_activeShape))
+        //    {
+        //        GameOver();
+        //    }
+        //    else
+        //    {
+        //        LandShape();
+        //    }
+        //}
     }
 
     private void MoveLeft()
@@ -248,8 +259,6 @@ public class BrickCar_GameController : MonoBehaviour
 
     private void LandShape()
     {
-        _playerShape.MoveUp();
-        _backgroundGrid.StoreShapeInGrid(_playerShape);
 
         //PlaySound(_audioManager.dropSound, 0.75f);
 
@@ -313,11 +322,11 @@ public class BrickCar_GameController : MonoBehaviour
 
     private void GameOver()
     {
+        _isGameOver = true;
+
         _playerShape.MoveUp();
 
         PlaySound(_audioManager.loseSound, 1f);
-
-        _isGameOver = true;
 
         Debug.Log(_playerShape.name + " is over the limit");
 
@@ -337,7 +346,7 @@ public class BrickCar_GameController : MonoBehaviour
     {
         if (_isGameOver)
         {
-            BrickTetris_BrickShape[] shapes = FindObjectsOfType<BrickTetris_BrickShape>();
+            BrickCar_BrickShape[] shapes = FindObjectsOfType<BrickCar_BrickShape>();
 
             for (int i = 0; i < shapes.Length; i++)
             {
