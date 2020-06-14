@@ -13,8 +13,6 @@ public class BrickCar_Spawner : MonoBehaviour
     private BrickCar_BrickShape _queuedPlayerShape;
     public BrickCar_BrickShape _queuedEnemyShape;
 
-    public float enemySpawnTime;
-
     // Start is called before the first frame update
     void Start()
     {

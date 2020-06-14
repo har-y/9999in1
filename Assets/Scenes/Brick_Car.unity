@@ -1252,6 +1252,7 @@ MonoBehaviour:
   _isPaused: 0
   _timeInterval: 0.9
   _timeEnemyInterval: 0.9
+  _timeEnemySpawnInterval: 10
 --- !u!1 &495791476
 GameObject:
   m_ObjectHideFlags: 0
@@ -2635,7 +2636,7 @@ MonoBehaviour:
   - {fileID: -353968081309727767, guid: 959ab5f815d13a44fbf3b84f2e871c97, type: 3}
   playerPosition: {fileID: 286232220}
   enemyContrainer: {fileID: 951453978}
-  spawnEnemyTime: 0
+  _queuedEnemyShape: {fileID: 0}
 --- !u!1 &951453977
 GameObject:
   m_ObjectHideFlags: 0
