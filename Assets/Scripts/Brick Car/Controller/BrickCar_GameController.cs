@@ -108,11 +108,11 @@ public class BrickCar_GameController : MonoBehaviour
         //    Debug.Log("not assign object");
         //}
 
-        //_animator = GetComponent<Animator>();
-        //if (!_animator)
-        //{
-        //    Debug.Log("not assign object");
-        //}
+        _animator = GetComponent<Animator>();
+        if (!_animator)
+        {
+            Debug.Log("not assign object");
+        }
 
         if (_pausePanel)
         {
@@ -381,7 +381,7 @@ public class BrickCar_GameController : MonoBehaviour
 
         //PlaySound(_audioManager.gameOverSound, 0.25f);
 
-        //_animator.SetTrigger("brick_gameover");
+        _animator.SetTrigger("brick_gameover");
     }
 
     public void Restart()
@@ -400,6 +400,13 @@ public class BrickCar_GameController : MonoBehaviour
             for (int i = 0; i < shapes.Length; i++)
             {
                 Destroy(shapes[i].gameObject);
+            }
+
+            BrickCar_Edge[] edge = FindObjectsOfType<BrickCar_Edge>();
+
+            for (int i = 0; i < edge.Length; i++)
+            {
+                Destroy(edge[i].gameObject);
             }
         }
     }
