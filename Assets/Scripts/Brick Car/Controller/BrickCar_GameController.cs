@@ -27,6 +27,7 @@ public class BrickCar_GameController : MonoBehaviour
     private BrickCar_BrickShape _playerShape;
     private BrickCar_BrickShape _enemyShape;
     private BrickCar_Spawner _spawner;
+    private BrickCar_Colider _colider;
     private BrickCar_AudioManager _audioManager;
     private BrickCar_ScoreController _scoreController;
 
@@ -88,6 +89,12 @@ public class BrickCar_GameController : MonoBehaviour
             }
         }
 
+        _colider = FindObjectOfType<BrickCar_Colider>();
+        if (!_colider)
+        {
+            Debug.Log("not assign object");
+        }
+
 
         //_audioManager = FindObjectOfType<BrickCar_AudioManager>();
         //if (!_audioManager)
@@ -124,7 +131,9 @@ public class BrickCar_GameController : MonoBehaviour
         PlayerInput();
         Enemy();
         Edge();
+        GameCheck();
     }
+
 
     private void OnEnable()
     {
@@ -255,6 +264,13 @@ public class BrickCar_GameController : MonoBehaviour
         _timeNextEnemySpawn = Time.time + _dropTimeEnemySpawnInterval;
         _enemyShape = _spawner.SpawnEnemyShape();
     }
+    private void GameCheck()
+    {
+        if (_colider.isCollided)
+        {
+            GameOver();
+        }
+    }
 
     private void MoveDown()
     {
@@ -359,15 +375,13 @@ public class BrickCar_GameController : MonoBehaviour
     {
         _isGameOver = true;
 
-        _playerShape.MoveUp();
+        Time.timeScale = (_isGameOver) ? 0 : 1;
 
-        PlaySound(_audioManager.loseSound, 1f);
+        //PlaySound(_audioManager.loseSound, 1f);
 
-        Debug.Log(_playerShape.name + " is over the limit");
+        //PlaySound(_audioManager.gameOverSound, 0.25f);
 
-        PlaySound(_audioManager.gameOverSound, 0.25f);
-
-        _animator.SetTrigger("brick_gameover");
+        //_animator.SetTrigger("brick_gameover");
     }
 
     public void Restart()
