@@ -5,9 +5,11 @@ using UnityEngine;
 public class BrickCar_Colider : MonoBehaviour
 {
     public bool isCollided;
+    public GameObject _brickCar;
 
     private Rigidbody2D _rb;
     private Animator _animator;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -35,10 +37,7 @@ public class BrickCar_Colider : MonoBehaviour
 
     private void Animation()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            transform.GetChild(i).gameObject.SetActive(false);
-        }
+        _brickCar.SetActive(false);
         _animator.SetTrigger("brick_death");
     }
 }
