@@ -10,18 +10,15 @@ public class BrickCar_ScoreController : MonoBehaviour
     public Text _highScoreText;
 
     public int _level = 0;
-    public int linesPerLevel = 5;
+    public int carsPerLevel = 5;
 
     public bool isLevelUp;
-
-    private const int _minLines = 1;
-    private const int _maxLines = 4;
 
     private string _highscoreKey = "HighScore";
 
     private int _score = 0;
     private int _highScore = 0;
-    private int _lines;
+    private int _cars;
 
     private void Awake()
     {
@@ -41,30 +38,20 @@ public class BrickCar_ScoreController : MonoBehaviour
 
     }
 
-    public void ScoreLines(int lines)
+    public void ScoreCars()
     {
-        isLevelUp = false;
+        _score += 100 * _level;
 
-        lines = Mathf.Clamp(lines, _minLines, _maxLines);
+        UpdateTextUI();
+    }
 
-        switch (lines)
-        {
-            case 1:
-                _score += 50 * _level;
-                break;
-            case 2:
-                _score += 100 * _level;
-                break;
-            case 3:
-                _score += 300 * _level;
-                break;
-            case 4:
-                _score += 400 * _level;
-                break;
-        }
-        _lines -= lines;
+    public void ScoreCars(int cars)
+    {
+        isLevelUp = false;        
 
-        if (_lines <= 0)
+        _cars -= cars;
+
+        if (_cars <= 0)
         {
             LevelUp();
             UpdateTextUI();
@@ -76,7 +63,7 @@ public class BrickCar_ScoreController : MonoBehaviour
     public void LevelReset()
     {
         _level = 1;
-        _lines = linesPerLevel * _level;
+        _cars = carsPerLevel * _level;
 
         UpdateTextUI();
     }
@@ -123,7 +110,7 @@ public class BrickCar_ScoreController : MonoBehaviour
     public void LevelUp()
     {
         _level++;
-        _lines = linesPerLevel * _level;
+        _cars = carsPerLevel * _level;
         isLevelUp = true;
     }
 }

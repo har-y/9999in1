@@ -52,7 +52,7 @@ public class BrickCar_BackgroundGrid : MonoBehaviour
 
     private bool IsInGrid(int x, int y)
     {
-        return (x >= 1 && x < width - 1 && y >= 0);
+        return (x >= 2 && x < width - 2 && y >= 0);
     }
 
     private bool IsValidOccupied(int x, int y, BrickCar_BrickShape shape)

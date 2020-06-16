@@ -18,9 +18,10 @@ public class BrickCar_GameController : MonoBehaviour
     public bool _isPaused = false;
 
     public float _timeInterval = 0.9f;
-    public float _timeEdgeInterval = 1.4f;
     public float _timeEnemyInterval = 0.9f;
     public float _timeEnemySpawnInterval = 3f;
+    public float _timeEdgeInterval = 1.4f;
+    public float _timeScoreInterval = 1f;
 
     private Animator _animator;
     private BrickCar_BackgroundGrid _backgroundGrid;
@@ -30,6 +31,8 @@ public class BrickCar_GameController : MonoBehaviour
     private BrickCar_Colider _colider;
     private BrickCar_AudioManager _audioManager;
     private BrickCar_ScoreController _scoreController;
+
+    private int _carsCounter;
 
     private enum Direction { none, left, right, up, down }
 
@@ -45,10 +48,12 @@ public class BrickCar_GameController : MonoBehaviour
     private float _dropTimeEdgeInterval;
     private float _dropTimeEnemyInterval;
     private float _dropTimeEnemySpawnInterval;
+    private float _dropTimeScoreInterval;
     private float _timeNextDown;
     private float _timeNextEdgeDown;
     private float _timeNextEnemyDown;
     private float _timeNextEnemySpawn;
+    private float _timeNextScoreSpawn;
 
     private float _timeNextSwipe;
     private float _timeNextDrag;
@@ -67,6 +72,9 @@ public class BrickCar_GameController : MonoBehaviour
         _dropTimeEdgeInterval = _timeEdgeInterval;
         _dropTimeEnemyInterval = _timeEnemyInterval;
         _dropTimeEnemySpawnInterval = _timeEnemySpawnInterval;
+        _dropTimeScoreInterval = _timeScoreInterval;
+
+        _carsCounter = 0;
 
         _backgroundGrid = FindObjectOfType<BrickCar_BackgroundGrid>();
         if (!_backgroundGrid)
@@ -102,11 +110,11 @@ public class BrickCar_GameController : MonoBehaviour
         //    Debug.Log("not assign object");
         //}
 
-        //_scoreController = FindObjectOfType<BrickCar_ScoreController>();
-        //if (!_scoreController)
-        //{
-        //    Debug.Log("not assign object");
-        //}
+        _scoreController = FindObjectOfType<BrickCar_ScoreController>();
+        if (!_scoreController)
+        {
+            Debug.Log("not assign object");
+        }
 
         _animator = GetComponent<Animator>();
         if (!_animator)
@@ -123,7 +131,7 @@ public class BrickCar_GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_backgroundGrid || !_spawner || !_playerShape )// || !_audioManager || !_scoreController || _isGameOver)
+        if (!_backgroundGrid || !_spawner || !_playerShape || !_scoreController)// || !_audioManager || _isGameOver)
         {
             return;
         }
@@ -131,6 +139,7 @@ public class BrickCar_GameController : MonoBehaviour
         PlayerInput();
         Enemy();
         Edge();
+        ScoreCheck();
         GameCheck();
     }
 
@@ -242,6 +251,8 @@ public class BrickCar_GameController : MonoBehaviour
         {
             if (_backgroundGrid.IsBelowLimit(shape.GetComponent<BrickCar_BrickShape>()))
             {
+                _carsCounter += 1;
+                _scoreController.ScoreCars(_carsCounter);
                 Destroy(shape);
             }
         }
@@ -270,6 +281,30 @@ public class BrickCar_GameController : MonoBehaviour
         {
             GameOver();
         }
+    }
+
+    private void ScoreCheck()
+    {
+        if (!_isGameOver)
+        {
+            if (Time.time > _timeNextScoreSpawn)
+            {
+                _timeNextScoreSpawn = Time.time + _dropTimeScoreInterval;
+
+                _scoreController.ScoreCars();
+
+                if (_scoreController.isLevelUp)
+                {
+                    _carsCounter = 0;
+
+                    _dropTimeEnemyInterval = Mathf.Clamp(_timeEnemyInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+                    _dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+                    _dropTimeEdgeInterval = Mathf.Clamp(_timeEdgeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+
+                    //PlaySound(_audioManager.levelUpSound, 0.35f);
+                }
+            }
+        }        
     }
 
     private void MoveDown()
