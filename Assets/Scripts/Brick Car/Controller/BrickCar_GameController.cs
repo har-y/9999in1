@@ -103,12 +103,11 @@ public class BrickCar_GameController : MonoBehaviour
             Debug.Log("not assign object");
         }
 
-
-        //_audioManager = FindObjectOfType<BrickCar_AudioManager>();
-        //if (!_audioManager)
-        //{
-        //    Debug.Log("not assign object");
-        //}
+        _audioManager = FindObjectOfType<BrickCar_AudioManager>();
+        if (!_audioManager)
+        {
+            Debug.Log("not assign object");
+        }
 
         _scoreController = FindObjectOfType<BrickCar_ScoreController>();
         if (!_scoreController)
@@ -131,7 +130,7 @@ public class BrickCar_GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_backgroundGrid || !_spawner || !_playerShape || !_scoreController)// || !_audioManager || _isGameOver)
+        if (!_backgroundGrid || !_spawner || !_playerShape || !_scoreController || !_audioManager || _isGameOver)
         {
             return;
         }
@@ -241,6 +240,11 @@ public class BrickCar_GameController : MonoBehaviour
         {
             shape.GetComponent<BrickCar_BrickShape>().MoveDown();
         }
+
+        if (_scoreController.isLevelUp)
+        {
+            _dropTimeEdgeInterval = Mathf.Clamp(_timeEdgeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+        }        
     }
 
     private void EnemyDestroy()
@@ -252,7 +256,9 @@ public class BrickCar_GameController : MonoBehaviour
             if (_backgroundGrid.IsBelowLimit(shape.GetComponent<BrickCar_BrickShape>()))
             {
                 _carsCounter += 1;
-                _scoreController.ScoreCars(_carsCounter);
+                
+                ScoreCheckLevelUp();
+
                 Destroy(shape);
             }
         }
@@ -268,13 +274,24 @@ public class BrickCar_GameController : MonoBehaviour
         {
             shape.GetComponent<BrickCar_BrickShape>().MoveDown();
         }
+
+        if (_scoreController.isLevelUp)
+        {
+            _dropTimeEnemyInterval = Mathf.Clamp(_timeEnemyInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+        }
     }
 
     private void EnemySpawn()
     {
         _timeNextEnemySpawn = Time.time + _dropTimeEnemySpawnInterval;
         _enemyShape = _spawner.SpawnEnemyShape();
+
+        if (_scoreController.isLevelUp)
+        {
+            _dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.01f), 0.05f, 1f);
+        }
     }
+
     private void GameCheck()
     {
         if (_colider.isCollided)
@@ -291,20 +308,24 @@ public class BrickCar_GameController : MonoBehaviour
             {
                 _timeNextScoreSpawn = Time.time + _dropTimeScoreInterval;
 
-                _scoreController.ScoreCars();
-
-                if (_scoreController.isLevelUp)
-                {
-                    _carsCounter = 0;
-
-                    _dropTimeEnemyInterval = Mathf.Clamp(_timeEnemyInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-                    _dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-                    _dropTimeEdgeInterval = Mathf.Clamp(_timeEdgeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-
-                    //PlaySound(_audioManager.levelUpSound, 0.35f);
-                }
+                _scoreController.ScoreCars();               
             }
         }        
+    }
+
+    private void ScoreCheckLevelUp()
+    {
+        if (_scoreController.isLevelUp)
+        {
+            _carsCounter = 0;
+
+            _scoreController.ScoreCars(_carsCounter);
+            //_dropTimeEnemyInterval = Mathf.Clamp(_timeEnemyInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+            //_dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+            //_dropTimeEdgeInterval = Mathf.Clamp(_timeEdgeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+
+            PlaySound(_audioManager.levelUpSound, 0.35f);
+        }
     }
 
     private void MoveDown()
@@ -321,12 +342,12 @@ public class BrickCar_GameController : MonoBehaviour
         if (!_backgroundGrid.IsValidPosition(_playerShape))
         {
             _playerShape.MoveRight();
-            //PlaySound(_audioManager.errorSound, 0.35f);
+            PlaySound(_audioManager.errorSound, 0.35f);
         }
-        //else
-        //{
-        //    PlaySound(_audioManager.moveSound, 0.25f);
-        //}
+        else
+        {
+            PlaySound(_audioManager.moveSound, 0.25f);
+        }
     }
 
     private void MoveRight()
@@ -337,42 +358,12 @@ public class BrickCar_GameController : MonoBehaviour
         if (!_backgroundGrid.IsValidPosition(_playerShape))
         {
             _playerShape.MoveLeft();
-            //PlaySound(_audioManager.errorSound, 0.35f);
+            PlaySound(_audioManager.errorSound, 0.35f);
         }
-        //else
-        //{
-        //    PlaySound(_audioManager.moveSound, 0.25f);
-        //}
-    }
-
-    private void LandShape()
-    {
-
-        //PlaySound(_audioManager.dropSound, 0.75f);
-
-        _timeNextLeftKey = Time.time;
-        _timeNextRightKey = Time.time;
-        _timeNextDownKey = Time.time;
-        _timeNextDownKey = Time.time;
-
-        //_backgroundGrid.StartCoroutine("ClearAllRows");
-
-        //if (_backgroundGrid.completedRows > 0)
-        //{
-        //    _scoreController.ScoreLines(_backgroundGrid.completedRows);
-
-        //    if (_scoreController.isLevelUp)
-        //    {
-        //        PlaySound(_audioManager.levelUpSound, 0.35f);
-        //        _dropTimeInterval = Mathf.Clamp(_timeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-        //    }
-        //    else
-        //    {
-        //        PlaySound(_audioManager.clearRowSound, 0.25f);
-        //    }
-
-        //    //PlaySound(_audioManager.clearRowSound, 0.15f);
-        //}
+        else
+        {
+            PlaySound(_audioManager.moveSound, 0.25f);
+        }
     }
 
     private void SwipeHandler(Vector2 swipeMovement)
@@ -412,9 +403,9 @@ public class BrickCar_GameController : MonoBehaviour
 
         Time.timeScale = (_isGameOver) ? 0 : 1;
 
-        //PlaySound(_audioManager.loseSound, 1f);
+        PlaySound(_audioManager.loseSound, 1f);
 
-        //PlaySound(_audioManager.gameOverSound, 0.25f);
+        PlaySound(_audioManager.gameOverSound, 0.10f);
 
         _animator.SetTrigger("brick_gameover");
     }
