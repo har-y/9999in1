@@ -19,7 +19,7 @@ public class BrickCar_GameController : MonoBehaviour
 
     public float _timeInterval = 0.9f;
     public float _timeEnemyInterval = 0.9f;
-    public float _timeEnemySpawnInterval = 3f;
+    public float _timeEnemySpawnInterval = 10f;
     public float _timeEdgeInterval = 1.4f;
     public float _timeScoreInterval = 1f;
 
@@ -256,12 +256,14 @@ public class BrickCar_GameController : MonoBehaviour
             if (_backgroundGrid.IsBelowLimit(shape.GetComponent<BrickCar_BrickShape>()))
             {
                 _carsCounter += 1;
-                
+
                 ScoreCheckLevelUp();
 
-                Destroy(shape);
+                _carsCounter -= 1;
+
+                Destroy(shape.gameObject);
             }
-        }
+        }     
     }
 
     private void EnemyMoveDown()
@@ -288,7 +290,8 @@ public class BrickCar_GameController : MonoBehaviour
 
         if (_scoreController.isLevelUp)
         {
-            _dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.01f), 0.05f, 1f);
+            //_dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+            _dropTimeEnemySpawnInterval = _timeEnemySpawnInterval - 0.5f;
         }
     }
 
@@ -308,24 +311,32 @@ public class BrickCar_GameController : MonoBehaviour
             {
                 _timeNextScoreSpawn = Time.time + _dropTimeScoreInterval;
 
-                _scoreController.ScoreCars();               
+                _scoreController.ScoreCars();              
+            }
+
+            if (_scoreController.isLevelUp)
+            {
+                PlaySound(_audioManager.levelUpSound, 0.35f);
             }
         }        
     }
 
     private void ScoreCheckLevelUp()
     {
-        if (_scoreController.isLevelUp)
+        if (!_isGameOver)
         {
-            _carsCounter = 0;
+            if (_scoreController.isLevelUp)
+            {
+                _carsCounter = 0;
 
-            _scoreController.ScoreCars(_carsCounter);
-            //_dropTimeEnemyInterval = Mathf.Clamp(_timeEnemyInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-            //_dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-            //_dropTimeEdgeInterval = Mathf.Clamp(_timeEdgeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+                //_dropTimeEnemyInterval = Mathf.Clamp(_timeEnemyInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+                //_dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+                //_dropTimeEdgeInterval = Mathf.Clamp(_timeEdgeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+            }
 
-            PlaySound(_audioManager.levelUpSound, 0.35f);
+            _scoreController.ScoreCars(_carsCounter);            
         }
+        
     }
 
     private void MoveDown()

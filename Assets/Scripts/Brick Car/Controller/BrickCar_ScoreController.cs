@@ -18,7 +18,7 @@ public class BrickCar_ScoreController : MonoBehaviour
 
     private int _score = 0;
     private int _highScore = 0;
-    private int _cars;
+    public int _cars;
 
     private void Awake()
     {
@@ -56,6 +56,8 @@ public class BrickCar_ScoreController : MonoBehaviour
             LevelUp();
             UpdateTextUI();
         }
+
+        isLevelUp = false;
 
         UpdateTextUI();
     }
