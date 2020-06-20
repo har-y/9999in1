@@ -255,11 +255,7 @@ public class BrickCar_GameController : MonoBehaviour
         {
             if (_backgroundGrid.IsBelowLimit(shape.GetComponent<BrickCar_BrickShape>()))
             {
-                _carsCounter += 1;
-
                 ScoreCheckLevelUp();
-
-                _carsCounter -= 1;
 
                 Destroy(shape.gameObject);
             }
@@ -311,7 +307,7 @@ public class BrickCar_GameController : MonoBehaviour
             {
                 _timeNextScoreSpawn = Time.time + _dropTimeScoreInterval;
 
-                _scoreController.ScoreCars();              
+                _scoreController.ScoreCars_ToScore();              
             }
 
             if (_scoreController.isLevelUp)
@@ -327,14 +323,12 @@ public class BrickCar_GameController : MonoBehaviour
         {
             if (_scoreController.isLevelUp)
             {
-                _carsCounter = 0;
-
                 //_dropTimeEnemyInterval = Mathf.Clamp(_timeEnemyInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
                 //_dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
                 //_dropTimeEdgeInterval = Mathf.Clamp(_timeEdgeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
             }
 
-            _scoreController.ScoreCars(_carsCounter);            
+            _scoreController.ScoreCars_ToLevel();
         }
         
     }

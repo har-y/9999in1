@@ -38,26 +38,24 @@ public class BrickCar_ScoreController : MonoBehaviour
 
     }
 
-    public void ScoreCars()
+    public void ScoreCars_ToScore()
     {
         _score += 100 * _level;
 
         UpdateTextUI();
     }
 
-    public void ScoreCars(int cars)
+    public void ScoreCars_ToLevel()
     {
         isLevelUp = false;        
 
-        _cars -= cars;
+        _cars -= 1;
 
         if (_cars <= 0)
         {
             LevelUp();
             UpdateTextUI();
         }
-
-        isLevelUp = false;
 
         UpdateTextUI();
     }
