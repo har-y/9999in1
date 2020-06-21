@@ -243,7 +243,7 @@ public class BrickCar_GameController : MonoBehaviour
 
         if (_scoreController.isLevelUp)
         {
-            _dropTimeEdgeInterval = Mathf.Clamp(_timeEdgeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+            _dropTimeEdgeInterval = Mathf.Clamp(_dropTimeEdgeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
         }        
     }
 
@@ -280,7 +280,7 @@ public class BrickCar_GameController : MonoBehaviour
 
         if (_scoreController.isLevelUp)
         {
-            _dropTimeEnemyInterval = Mathf.Clamp(_timeEnemyInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
+            _dropTimeEnemyInterval = Mathf.Clamp(_dropTimeEnemyInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
         }
     }
 
@@ -291,8 +291,7 @@ public class BrickCar_GameController : MonoBehaviour
 
         if (_scoreController.isLevelUp)
         {
-            //_dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-            _dropTimeEnemySpawnInterval = _timeEnemySpawnInterval - 0.5f;           
+            _dropTimeEnemySpawnInterval = Mathf.Clamp(_dropTimeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 10f);
         }
     }
 
