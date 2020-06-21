@@ -255,11 +255,16 @@ public class BrickCar_GameController : MonoBehaviour
         {
             if (_backgroundGrid.IsBelowLimit(shape.GetComponent<BrickCar_BrickShape>()))
             {
-                ScoreCheckLevelUp();
+                _scoreController.ScoreCars_ToLevel();
+
+                if (_scoreController.isLevelUp)
+                {
+                    PlaySound(_audioManager.levelUpSound, 0.35f);
+                }
 
                 Destroy(shape.gameObject);
             }
-        }     
+        }
     }
 
     private void EnemyMoveDown()
@@ -287,7 +292,7 @@ public class BrickCar_GameController : MonoBehaviour
         if (_scoreController.isLevelUp)
         {
             //_dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-            _dropTimeEnemySpawnInterval = _timeEnemySpawnInterval - 0.5f;
+            _dropTimeEnemySpawnInterval = _timeEnemySpawnInterval - 0.5f;           
         }
     }
 
@@ -307,30 +312,9 @@ public class BrickCar_GameController : MonoBehaviour
             {
                 _timeNextScoreSpawn = Time.time + _dropTimeScoreInterval;
 
-                _scoreController.ScoreCars_ToScore();              
-            }
-
-            if (_scoreController.isLevelUp)
-            {
-                PlaySound(_audioManager.levelUpSound, 0.35f);
+                _scoreController.ScoreCars_ToScore();                    
             }
         }        
-    }
-
-    private void ScoreCheckLevelUp()
-    {
-        if (!_isGameOver)
-        {
-            if (_scoreController.isLevelUp)
-            {
-                //_dropTimeEnemyInterval = Mathf.Clamp(_timeEnemyInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-                //_dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-                //_dropTimeEdgeInterval = Mathf.Clamp(_timeEdgeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-            }
-
-            _scoreController.ScoreCars_ToLevel();
-        }
-        
     }
 
     private void MoveDown()
