@@ -1697,6 +1697,7 @@ MonoBehaviour:
   _timeInterval: 0.9
   _timeEnemyInterval: 0.9
   _timeEnemySpawnInterval: 10
+  _timeEnemyFastSpawnInterval: 2
   _timeEdgeInterval: 1.4
   _timeScoreInterval: 1
 --- !u!95 &466371042
