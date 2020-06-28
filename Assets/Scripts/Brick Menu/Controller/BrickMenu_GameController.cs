@@ -25,13 +25,8 @@ public class BrickMenu_GameController : MonoBehaviour
     public float _timeScoreInterval = 1f;
 
     private Animator _animator;
-    private BrickCar_BackgroundGrid _backgroundGrid;
-    private BrickCar_BrickShape _playerShape;
-    private BrickCar_BrickShape _enemyShape;
-    private BrickCar_Spawner _spawner;
-    private BrickCar_Colider _colider;
-    private BrickCar_AudioManager _audioManager;
-    private BrickCar_ScoreController _scoreController;
+    private BrickMenu_BackgroundGrid _backgroundGrid;
+    private BrickMenu_AudioManager _audioManager;
 
     private enum Direction { none, left, right, up, down }
 
@@ -77,45 +72,18 @@ public class BrickMenu_GameController : MonoBehaviour
         _dropTimeEnemyFastSpawnInterval = _timeEnemyFastSpawnInterval;
         _dropTimeScoreInterval = _timeScoreInterval;
 
-        _backgroundGrid = FindObjectOfType<BrickCar_BackgroundGrid>();
+        _backgroundGrid = FindObjectOfType<BrickMenu_BackgroundGrid>();
         if (!_backgroundGrid)
         {
             Debug.Log("not assign object");
         }
-
-        _spawner = FindObjectOfType<BrickCar_Spawner>();
-        if (!_spawner)
-        {
-            Debug.Log("not assign object");
-        }
-        else
-        {
-            _spawner.transform.position = BrickCar_Vectorf.Round(_spawner.transform.position);
-
-            if (!_playerShape)
-            {
-                _playerShape = _spawner.SpawnPlayerShape();              
-            }
-        }
-
-        _colider = FindObjectOfType<BrickCar_Colider>();
-        if (!_colider)
-        {
-            Debug.Log("not assign object");
-        }
-
-        _audioManager = FindObjectOfType<BrickCar_AudioManager>();
+      
+        _audioManager = FindObjectOfType<BrickMenu_AudioManager>();
         if (!_audioManager)
         {
             Debug.Log("not assign object");
         }
-
-        _scoreController = FindObjectOfType<BrickCar_ScoreController>();
-        if (!_scoreController)
-        {
-            Debug.Log("not assign object");
-        }
-
+        
         _animator = GetComponent<Animator>();
         if (!_animator)
         {
@@ -131,16 +99,12 @@ public class BrickMenu_GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_backgroundGrid || !_spawner || !_playerShape || !_scoreController || !_audioManager || _isGameOver)
+        if (!_backgroundGrid || !_audioManager || _isGameOver)
         {
             return;
         }
 
         PlayerInput();
-        Enemy();
-        Edge();
-        ScoreCheck();
-        GameCheck();
     }
 
 
@@ -172,7 +136,6 @@ public class BrickMenu_GameController : MonoBehaviour
         {
             _fastSpawn = true;
 
-            EnemyMoveDown();
         }
         else if ((_swipeDirection == Direction.right && Time.time > _timeNextSwipe) || (_dragDirection == Direction.right && Time.time > _timeNextDrag))
         {
@@ -209,113 +172,6 @@ public class BrickMenu_GameController : MonoBehaviour
         _didTap = false;
     }
 
-    private void Enemy()
-    {
-        if (!_isGameOver)
-        {
-            if (Time.time > _timeNextEnemyDown)
-            {
-                EnemyMoveDown();
-            }
-            else if ((Time.time > _timeNextEnemySpawn) || ((Time.time > _timeNextEnemyFastSpawn) && _fastSpawn))
-            {
-                EnemySpawn();
-            }
-
-            EnemyDestroy();
-        }
-    }
-
-    private void Edge()
-    {
-        if (!_isGameOver)
-        {
-            if (Time.time > _timeNextEdgeDown)
-            {
-                EdgeMoveDown();
-            }
-        }
-    }
-
-    private void EdgeMoveDown()
-    {
-        _timeNextEdgeDown = Time.time + _dropTimeEdgeInterval;
-
-        GameObject[] _edgeShapes = GameObject.FindGameObjectsWithTag("Edge");
-        foreach (GameObject shape in _edgeShapes)
-        {
-            shape.GetComponent<BrickCar_BrickShape>().MoveDown();
-        }     
-    }
-
-    private void EnemyDestroy()
-    {
-        GameObject[] enemyShapes = GameObject.FindGameObjectsWithTag("Enemy");
-
-        foreach (GameObject shape in enemyShapes)
-        {
-            if (_backgroundGrid.IsBelowLimit(shape.GetComponent<BrickCar_BrickShape>()))
-            {
-                _scoreController.ScoreCars_ToLevel();
-
-                if (_scoreController.isLevelUp)
-                {
-                    PlaySound(_audioManager.levelUpSound, 0.35f);
-                }
-
-                Destroy(shape.gameObject);
-            }
-        }
-    }
-
-    private void EnemyMoveDown()
-    {
-        _timeNextEnemyDown = Time.time + _dropTimeEnemyInterval;
-
-        GameObject[] enemyShapes = GameObject.FindGameObjectsWithTag("Enemy");
-
-        foreach (GameObject shape in enemyShapes)
-        {
-            shape.GetComponent<BrickCar_BrickShape>().MoveDown();
-        }
-    }
-
-    private void EnemySpawn()
-    {
-        _timeNextEnemySpawn = Time.time + _dropTimeEnemySpawnInterval;
-        _timeNextEnemyFastSpawn = Time.time + _dropTimeEnemyFastSpawnInterval;
-
-        _enemyShape = _spawner.SpawnEnemyShape();
-    }
-
-    private void GameCheck()
-    {
-        if (_colider.isCollided)
-        {
-            GameOver();
-        }
-
-        if (_scoreController.isLevelUp)
-        {
-            _dropTimeEdgeInterval = Mathf.Clamp(_timeEdgeInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-            _dropTimeEnemyInterval = Mathf.Clamp(_timeEnemyInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 1f);
-            _dropTimeEnemySpawnInterval = Mathf.Clamp(_timeEnemySpawnInterval - (((float)_scoreController._level - 1) * 0.05f), 0.05f, 10f);
-        }
-    }
-
-    private void ScoreCheck()
-    {
-        if (!_isGameOver)
-        {
-            if (Time.time > _timeNextScoreSpawn)
-            {
-                _timeNextScoreSpawn = Time.time + _dropTimeScoreInterval;
-
-                _scoreController.ScoreCars_ToScore();                    
-            }
-        }        
-    }
-
     private void MoveDown()
     {
         _timeNextDown = Time.time + _dropTimeInterval;
@@ -324,34 +180,12 @@ public class BrickMenu_GameController : MonoBehaviour
 
     private void MoveLeft()
     {
-        _playerShape.MoveLeft();
         _timeNextLeftKey = Time.time + _timeRepeatRateLeftKey;
-
-        if (!_backgroundGrid.IsValidPosition(_playerShape))
-        {
-            _playerShape.MoveRight();
-            PlaySound(_audioManager.errorSound, 0.35f);
-        }
-        else
-        {
-            PlaySound(_audioManager.moveSound, 0.25f);
-        }
     }
 
     private void MoveRight()
     {
-        _playerShape.MoveRight();
         _timeNextRightKey = Time.time + _timeRepeatRateRightKey;
-
-        if (!_backgroundGrid.IsValidPosition(_playerShape))
-        {
-            _playerShape.MoveLeft();
-            PlaySound(_audioManager.errorSound, 0.35f);
-        }
-        else
-        {
-            PlaySound(_audioManager.moveSound, 0.25f);
-        }
     }
 
     private void SwipeHandler(Vector2 swipeMovement)
