@@ -16,7 +16,7 @@ public class BrickMenu_AudioManager : MonoBehaviour
     public AudioClip levelUpSound;
     public AudioClip backgroundMusic;
     public AudioSource musicSource;
-    public BrickCar_IconToggle iconToggle;
+    public BrickMenu_IconToggle iconToggle;
 
     public bool musicEnabled = true;
     public bool fxEnabled = true;

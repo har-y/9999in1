@@ -17,6 +17,8 @@ public class BrickMenu_GameController : MonoBehaviour
 
     public bool _isPaused = false;
 
+    public int _option;
+
     public float _timeInterval = 0.9f;
     public float _timeEnemyInterval = 0.9f;
     public float _timeEnemySpawnInterval = 10f;
@@ -33,7 +35,6 @@ public class BrickMenu_GameController : MonoBehaviour
     private Direction _swipeDirection = Direction.none;
     private Direction _dragDirection = Direction.none;
 
-    private int _option;
 
     private float _timeNextLeftKey;
     private float _timeNextRightKey;
@@ -127,20 +128,22 @@ public class BrickMenu_GameController : MonoBehaviour
         if ((Input.GetButton("MoveRight") && Time.time > _timeNextRightKey) || Input.GetButtonDown("MoveRight"))
         {
             MoveRight();
-            _option = 0;
+            _option = 1;
         }
         else if ((Input.GetButton("MoveLeft") && Time.time > _timeNextLeftKey) || Input.GetButtonDown("MoveLeft"))
         {
             MoveLeft();
-            _option = 1;
+            _option = 0;
         }
-        else if (Input.GetButton("MoveDown") && (Time.time > _timeNextDownKey))
+        else if (Input.GetButton("MoveDown") && (Time.time > _timeNextDownKey) || Input.GetButton("MoveDown"))
         {
             _animator.Play("menu_change");
         }
         else if ((_swipeDirection == Direction.right && Time.time > _timeNextSwipe) || (_dragDirection == Direction.right && Time.time > _timeNextDrag))
         {
             MoveRight();
+
+            _option = 1;
 
             _timeNextSwipe = Time.time + _timeRepeatSwipe;
             _timeNextDrag = Time.time + _timeRepeatDrag;
@@ -149,12 +152,16 @@ public class BrickMenu_GameController : MonoBehaviour
         {
             MoveLeft();
 
+            _option = 0;
+
             _timeNextSwipe = Time.time + _timeRepeatSwipe;
             _timeNextDrag = Time.time + _timeRepeatDrag;
         }
         else if ((_swipeDirection == Direction.up && Time.time > _timeNextSwipe) || (_didTap))
         {
             MoveDown();
+
+            _animator.Play("menu_change");
 
             _timeNextSwipe = Time.time + _timeRepeatSwipe;
             _didTap = false;
@@ -216,6 +223,27 @@ public class BrickMenu_GameController : MonoBehaviour
         return swipeDirection;
     }
 
+    private void SceneSpriteClear()
+    {
+        BrickMenu_Option sprite = FindObjectOfType<BrickMenu_Option>();
+        sprite.gameObject.SetActive(false);
+    }
+
+    private void SceneChange()
+    {
+        switch (_option)
+        {
+            case 0:
+                SceneManager.LoadScene(1);
+                break;
+            case 1:
+                SceneManager.LoadScene(2);
+                break;
+            default:
+                break;
+        }
+    }
+
     public void Restart()
     {
         Time.timeScale = 1;
@@ -251,21 +279,6 @@ public class BrickMenu_GameController : MonoBehaviour
             }
 
             Time.timeScale = (_isPaused) ? 0 : 1;
-        }
-    }
-
-    private void SceneChange()
-    {
-        switch (_option)
-        {
-            case 0:
-                SceneManager.LoadScene(1);
-                break;
-            case 1:
-                SceneManager.LoadScene(2);
-                break;
-            default:
-                break;
         }
     }
 }
