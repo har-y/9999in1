@@ -33,6 +33,8 @@ public class BrickMenu_GameController : MonoBehaviour
     private Direction _swipeDirection = Direction.none;
     private Direction _dragDirection = Direction.none;
 
+    private int _option;
+
     private float _timeNextLeftKey;
     private float _timeNextRightKey;
     private float _timeNextRotateKey;
@@ -54,9 +56,7 @@ public class BrickMenu_GameController : MonoBehaviour
     private float _timeNextSwipe;
     private float _timeNextDrag;
 
-    private bool _isGameOver = false;
     private bool _didTap = false;
-    private bool _fastSpawn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -99,7 +99,7 @@ public class BrickMenu_GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_backgroundGrid || !_audioManager || _isGameOver)
+        if (!_backgroundGrid || !_audioManager)
         {
             return;
         }
@@ -127,15 +127,16 @@ public class BrickMenu_GameController : MonoBehaviour
         if ((Input.GetButton("MoveRight") && Time.time > _timeNextRightKey) || Input.GetButtonDown("MoveRight"))
         {
             MoveRight();
+            _option = 0;
         }
         else if ((Input.GetButton("MoveLeft") && Time.time > _timeNextLeftKey) || Input.GetButtonDown("MoveLeft"))
         {
             MoveLeft();
+            _option = 1;
         }
         else if (Input.GetButton("MoveDown") && (Time.time > _timeNextDownKey))
         {
-            _fastSpawn = true;
-
+            _animator.Play("menu_change");
         }
         else if ((_swipeDirection == Direction.right && Time.time > _timeNextSwipe) || (_dragDirection == Direction.right && Time.time > _timeNextDrag))
         {
@@ -161,10 +162,6 @@ public class BrickMenu_GameController : MonoBehaviour
         else if (Input.GetButtonDown("Pause"))
         {
             TogglePause();
-        }
-        else
-        {
-            _fastSpawn = false;
         }
 
         _dragDirection = Direction.none;
@@ -219,44 +216,11 @@ public class BrickMenu_GameController : MonoBehaviour
         return swipeDirection;
     }
 
-    private void GameOver()
-    {
-        _isGameOver = true;
-
-        Time.timeScale = (_isGameOver) ? 0 : 1;
-
-        PlaySound(_audioManager.loseSound, 1f);
-
-        PlaySound(_audioManager.gameOverSound, 0.10f);
-
-        _animator.SetTrigger("brick_gameover");
-    }
-
     public void Restart()
     {
         Time.timeScale = 1;
         Debug.Log("Restarted");
         SceneManager.LoadScene(0);
-    }
-
-    public void RestartClear()
-    {
-        if (_isGameOver)
-        {
-            BrickCar_BrickShape[] shapes = FindObjectsOfType<BrickCar_BrickShape>();
-
-            for (int i = 0; i < shapes.Length; i++)
-            {
-                Destroy(shapes[i].gameObject);
-            }
-
-            BrickCar_Edge[] edge = FindObjectsOfType<BrickCar_Edge>();
-
-            for (int i = 0; i < edge.Length; i++)
-            {
-                Destroy(edge[i].gameObject);
-            }
-        }
     }
 
     public void Exit()
@@ -275,11 +239,6 @@ public class BrickMenu_GameController : MonoBehaviour
 
     public void TogglePause()
     {
-        if (_isGameOver)
-        {
-            return;
-        }
-
         _isPaused = !_isPaused;
 
         if (_pausePanel)
@@ -292,6 +251,21 @@ public class BrickMenu_GameController : MonoBehaviour
             }
 
             Time.timeScale = (_isPaused) ? 0 : 1;
+        }
+    }
+
+    private void SceneChange()
+    {
+        switch (_option)
+        {
+            case 0:
+                SceneManager.LoadScene(1);
+                break;
+            case 1:
+                SceneManager.LoadScene(2);
+                break;
+            default:
+                break;
         }
     }
 }
