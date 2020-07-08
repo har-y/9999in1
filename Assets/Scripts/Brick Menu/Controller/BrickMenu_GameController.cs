@@ -74,10 +74,6 @@ public class BrickMenu_GameController : MonoBehaviour
         _dropTimeScoreInterval = _timeScoreInterval;
 
         _backgroundGrid = FindObjectOfType<BrickMenu_BackgroundGrid>();
-        if (!_backgroundGrid)
-        {
-            Debug.Log("not assign object");
-        }
       
         _audioManager = FindObjectOfType<BrickMenu_AudioManager>();
         if (!_audioManager)
@@ -100,7 +96,7 @@ public class BrickMenu_GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_backgroundGrid || !_audioManager)
+        if (!_audioManager)
         {
             return;
         }
