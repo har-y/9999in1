@@ -14,6 +14,7 @@ public class BrickMenu_GameController : MonoBehaviour
     [Range(0.05f, 1f)] public float _timeRepeatDrag = 0.20f;
 
     [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _backgroundFrame;
 
     public bool _isPaused = false;
 
@@ -34,7 +35,6 @@ public class BrickMenu_GameController : MonoBehaviour
 
     private Direction _swipeDirection = Direction.none;
     private Direction _dragDirection = Direction.none;
-
 
     private float _timeNextLeftKey;
     private float _timeNextRightKey;
@@ -57,6 +57,8 @@ public class BrickMenu_GameController : MonoBehaviour
     private float _timeNextSwipe;
     private float _timeNextDrag;
 
+    private BrickMenu_Option _menuOptions;
+
     private bool _didTap = false;
 
     // Start is called before the first frame update
@@ -74,7 +76,14 @@ public class BrickMenu_GameController : MonoBehaviour
         _dropTimeScoreInterval = _timeScoreInterval;
 
         _backgroundGrid = FindObjectOfType<BrickMenu_BackgroundGrid>();
-      
+     
+        _menuOptions = FindObjectOfType<BrickMenu_Option>();
+        if (!_menuOptions)
+        {
+            Debug.Log("not assign object");
+        }
+        _menuOptions.gameObject.SetActive(false);
+
         _audioManager = FindObjectOfType<BrickMenu_AudioManager>();
         if (!_audioManager)
         {
@@ -91,6 +100,8 @@ public class BrickMenu_GameController : MonoBehaviour
         {
             _pausePanel.SetActive(false);
         }
+
+        _animator.SetTrigger("menu_start");
     }
 
     // Update is called once per frame
@@ -217,6 +228,12 @@ public class BrickMenu_GameController : MonoBehaviour
         }
 
         return swipeDirection;
+    }
+
+    private void MenuOption()
+    {
+        _menuOptions.gameObject.SetActive(true);
+        _backgroundFrame.gameObject.SetActive(true);
     }
 
     private void SceneSpriteClear()

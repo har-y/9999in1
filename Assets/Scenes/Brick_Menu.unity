@@ -1916,6 +1916,7 @@ MonoBehaviour:
   _timeRepeatSwipe: 0.2
   _timeRepeatDrag: 0.2
   _pausePanel: {fileID: 1758719484}
+  _backgroundFrame: {fileID: 2095894834}
   _isPaused: 0
   _option: 0
   _timeInterval: 0.9
@@ -6272,7 +6273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2095894835
 Transform:
   m_ObjectHideFlags: 0
