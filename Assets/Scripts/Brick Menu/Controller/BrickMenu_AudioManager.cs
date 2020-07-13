@@ -15,6 +15,7 @@ public class BrickMenu_AudioManager : MonoBehaviour
     public AudioClip gameOverSound;
     public AudioClip levelUpSound;
     public AudioClip backgroundMusic;
+    public AudioClip gameOn;
     public AudioSource musicSource;
     public BrickMenu_IconToggle iconToggle;
 

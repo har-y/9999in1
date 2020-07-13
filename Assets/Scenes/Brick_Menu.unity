@@ -6392,6 +6392,7 @@ MonoBehaviour:
   gameOverSound: {fileID: 8300000, guid: 8a83bfe3dea305f45b6a78e13df4adaa, type: 3}
   levelUpSound: {fileID: 8300000, guid: 7b17a12b826997d4da1b8da072da160f, type: 3}
   backgroundMusic: {fileID: 0}
+  gameOn: {fileID: 8300000, guid: 1ade3efd501ec0b46a4026420519c5b3, type: 3}
   musicSource: {fileID: 1734523527}
   iconToggle: {fileID: 1344263647}
   musicEnabled: 1

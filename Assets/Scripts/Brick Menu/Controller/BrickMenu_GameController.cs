@@ -102,6 +102,7 @@ public class BrickMenu_GameController : MonoBehaviour
         }
 
         _animator.SetTrigger("menu_start");
+        PlaySound(_audioManager.gameOn, 0.2f);
     }
 
     // Update is called once per frame
@@ -185,17 +186,20 @@ public class BrickMenu_GameController : MonoBehaviour
 
     private void MoveDown()
     {
+        PlaySound(_audioManager.moveSound, 0.25f);
         _timeNextDown = Time.time + _dropTimeInterval;
         _timeNextDownKey = Time.time + _timeRepeatRateDownKey;
     }
 
     private void MoveLeft()
     {
+        PlaySound(_audioManager.moveSound, 0.25f);
         _timeNextLeftKey = Time.time + _timeRepeatRateLeftKey;
     }
 
     private void MoveRight()
     {
+        PlaySound(_audioManager.moveSound, 0.25f);
         _timeNextRightKey = Time.time + _timeRepeatRateRightKey;
     }
 
