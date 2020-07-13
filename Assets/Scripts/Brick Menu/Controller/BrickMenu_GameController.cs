@@ -119,16 +119,16 @@ public class BrickMenu_GameController : MonoBehaviour
 
     private void OnEnable()
     {
-        BrickTetris_TouchController.SwipeEvent += SwipeHandler;
-        BrickTetris_TouchController.DragEvent += DragHandler;
-        BrickTetris_TouchController.TapEvent += TapHandler;
+        BrickMenu_TouchController.SwipeEvent += SwipeHandler;
+        BrickMenu_TouchController.DragEvent += DragHandler;
+        BrickMenu_TouchController.TapEvent += TapHandler;
     }
 
     private void OnDisable()
     {
-        BrickTetris_TouchController.SwipeEvent -= SwipeHandler;
-        BrickTetris_TouchController.DragEvent -= DragHandler;
-        BrickTetris_TouchController.TapEvent -= TapHandler;
+        BrickMenu_TouchController.SwipeEvent -= SwipeHandler;
+        BrickMenu_TouchController.DragEvent -= DragHandler;
+        BrickMenu_TouchController.TapEvent -= TapHandler;
     }
 
     private void PlayerInput()
@@ -136,22 +136,18 @@ public class BrickMenu_GameController : MonoBehaviour
         if ((Input.GetButton("MoveRight") && Time.time > _timeNextRightKey) || Input.GetButtonDown("MoveRight"))
         {
             MoveRight();
-            _option = 1;
         }
         else if ((Input.GetButton("MoveLeft") && Time.time > _timeNextLeftKey) || Input.GetButtonDown("MoveLeft"))
         {
             MoveLeft();
-            _option = 0;
         }
         else if (Input.GetButton("MoveDown") && (Time.time > _timeNextDownKey) || Input.GetButton("MoveDown"))
         {
-            _animator.Play("menu_change");
+            MoveDown();
         }
         else if ((_swipeDirection == Direction.right && Time.time > _timeNextSwipe) || (_dragDirection == Direction.right && Time.time > _timeNextDrag))
         {
             MoveRight();
-
-            _option = 1;
 
             _timeNextSwipe = Time.time + _timeRepeatSwipe;
             _timeNextDrag = Time.time + _timeRepeatDrag;
@@ -160,16 +156,12 @@ public class BrickMenu_GameController : MonoBehaviour
         {
             MoveLeft();
 
-            _option = 0;
-
             _timeNextSwipe = Time.time + _timeRepeatSwipe;
             _timeNextDrag = Time.time + _timeRepeatDrag;
         }
         else if ((_swipeDirection == Direction.up && Time.time > _timeNextSwipe) || (_didTap))
         {
             MoveDown();
-
-            _animator.Play("menu_change");
 
             _timeNextSwipe = Time.time + _timeRepeatSwipe;
             _didTap = false;
@@ -186,6 +178,8 @@ public class BrickMenu_GameController : MonoBehaviour
 
     private void MoveDown()
     {
+        _animator.Play("menu_change");
+
         PlaySound(_audioManager.moveSound, 0.25f);
         _timeNextDown = Time.time + _dropTimeInterval;
         _timeNextDownKey = Time.time + _timeRepeatRateDownKey;
@@ -193,12 +187,16 @@ public class BrickMenu_GameController : MonoBehaviour
 
     private void MoveLeft()
     {
+        _option = 0;
+
         PlaySound(_audioManager.moveSound, 0.25f);
         _timeNextLeftKey = Time.time + _timeRepeatRateLeftKey;
     }
 
     private void MoveRight()
     {
+        _option = 1;
+
         PlaySound(_audioManager.moveSound, 0.25f);
         _timeNextRightKey = Time.time + _timeRepeatRateRightKey;
     }
