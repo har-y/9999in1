@@ -17,7 +17,7 @@ public class BrickTetris_GameController : MonoBehaviour
 
     public bool _isPaused = false;
 
-    public  float _timeInterval = 0.9f;
+    public float _timeInterval = 0.9f;
 
     private Animator _animator;
     private BrickTetris_BackgroundGrid _backgroundGrid;
@@ -166,7 +166,7 @@ public class BrickTetris_GameController : MonoBehaviour
         }
         else if (_dragDirection == Direction.down && Time.time > _timeNextDrag)
         {
-            MoveDown();          
+            MoveDown();
         }
         else if (Input.GetButtonDown("Pause"))
         {
@@ -331,6 +331,13 @@ public class BrickTetris_GameController : MonoBehaviour
     {
         Time.timeScale = 1;
         Debug.Log("Restarted");
+        SceneManager.LoadScene(1);
+    }
+
+    public void Home()
+    {
+        Time.timeScale = 1;
+        Debug.Log("Home");
         SceneManager.LoadScene(0);
     }
 

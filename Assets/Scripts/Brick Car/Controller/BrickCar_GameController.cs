@@ -402,6 +402,13 @@ public class BrickCar_GameController : MonoBehaviour
     {
         Time.timeScale = 1;
         Debug.Log("Restarted");
+        SceneManager.LoadScene(2);
+    }
+
+    public void Home()
+    {
+        Time.timeScale = 1;
+        Debug.Log("Home");
         SceneManager.LoadScene(0);
     }
 
